@@ -158,9 +158,11 @@ namespace web_api.Migrations
 
             modelBuilder.Entity("web_api.Models.Subject", b =>
                 {
-                    b.HasOne("web_api.Models.SchoolYear", null)
+                    b.HasOne("web_api.Models.SchoolYear", "SchoolYear")
                         .WithMany("Subjects")
                         .HasForeignKey("SchoolYearId");
+
+                    b.Navigation("SchoolYear");
                 });
 
             modelBuilder.Entity("web_api.Models.School", b =>
