@@ -1,4 +1,5 @@
 ﻿using web_api.Models;
+using web_api.Models.DetailModels;
 
 namespace web_api.Services.ServiceInterfaces
 {
@@ -9,6 +10,6 @@ namespace web_api.Services.ServiceInterfaces
         List<SchoolYear> GetAllSchoolYears();
         SchoolYear GetSchoolYearById(Guid schoolYearId);
         ResponseModel AddSubjectToSchoolYear(Guid schoolYearId, Guid subjectId);
-        List<Subject> GetSubjectsOfSchoolYear(Guid schoolYear);
+        List<SubjectDetails> GetSubjectsOfSchoolYear(Guid schoolYearId);
     }
 }

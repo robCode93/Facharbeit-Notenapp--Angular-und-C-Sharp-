@@ -6,5 +6,7 @@ namespace web_api.Services.ServiceInterfaces
     {
         ResponseModel SaveHoliday(Holiday holidayModel);
         ResponseModel DeleteHoliday(Guid holidayId);
+        Holiday GetHolidayById(Guid holidayId);
+        List<Holiday> GetAllHolidays();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using web_api.Models;
+using web_api.Models.DetailModels;
 
 namespace web_api.Services.ServiceInterfaces
 {
@@ -8,7 +9,7 @@ namespace web_api.Services.ServiceInterfaces
         ResponseModel DeleteSubject(Guid subjectId);
         Subject GetSubjectById(Guid subjectId);
         List<Subject> GetAllSubjects();
-        List<Grad> GetGradsOfSubject(Guid subjectId);
+        List<GradDetails> GetGradsOfSubject(Guid subjectId);
         ResponseModel AddGradToSubject(Guid subjectId, Grad gradModel);
     }
 }

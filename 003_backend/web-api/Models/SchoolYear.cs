@@ -10,9 +10,9 @@ namespace web_api.Models
         public string? Name { get; set; }
 
         // Fremdverweise der Klasse
-        public SchoolDetails? School { get; set; }
+        public School? School { get; set; }
 
         // Listen der Klasse
-        public List<SubjectDetails>? Subjects { get; set; }
+        public List<Subject>? Subjects { get; set; } = new List<Subject>();
     }
 }

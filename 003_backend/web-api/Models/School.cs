@@ -11,6 +11,6 @@ namespace web_api.Models
         public string? FedState { get; set; }
        
         // Listen der Klasse
-        public List<HolidayDetails>? Holidays { get; set; }
+        public List<Holiday>? Holidays { get; set; } = new List<Holiday>();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using web_api.Models;
+using web_api.Models.DetailModels;
 
 namespace web_api.Services.ServiceInterfaces
 {
@@ -8,7 +9,6 @@ namespace web_api.Services.ServiceInterfaces
         ResponseModel DeleteSchool(Guid schoolId);
         List<School> GetAllSchools();
         School GetSchoolById(Guid schoolId);
-        List<Holiday> GetHolidaysOfSchool(Guid schoolId);
-        Holiday GetHolidayById(Guid holidayId);
+        List<HolidayDetails> GetHolidaysOfSchool(Guid schoolId);
     }
 }

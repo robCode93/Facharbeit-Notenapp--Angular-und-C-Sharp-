@@ -6,10 +6,10 @@ namespace web_api.Models
     {
         public WebAppContext(DbContextOptions options) : base(options) { }
 
-        DbSet<SchoolYear>? SchoolYears { get; set; }
-        DbSet<School>? Schools { get; set; }
-        DbSet<Holiday>? Holidays { get; set; }
-        DbSet<Subject>? Subjects { get; set; }
-        DbSet<Grad>? Grads { get; set; }
+        public DbSet<SchoolYear>? SchoolYears { get; set; }
+        public DbSet<School>? Schools { get; set; }
+        public DbSet<Holiday>? Holidays { get; set; }
+        public DbSet<Subject>? Subjects { get; set; }
+        public DbSet<Grad>? Grads { get; set; }
     }
 }
