@@ -22,4 +22,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="CRUDModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CRUDModels\" />
+  </ItemGroup>
 </Project>

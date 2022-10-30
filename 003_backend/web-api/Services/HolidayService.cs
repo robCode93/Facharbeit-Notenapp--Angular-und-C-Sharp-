@@ -1,4 +1,6 @@
-﻿using web_api.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using web_api.Models;
+using web_api.Models.DetailModels;
 using web_api.Services.ServiceInterfaces;
 
 namespace web_api.Services
@@ -13,79 +15,45 @@ namespace web_api.Services
             _context = context;
         }
 
-        public ResponseModel DeleteHoliday(Guid holidayId)
+        public List<HolidayDetails> GetAllHolidays()
         {
-            ResponseModel model = new ResponseModel();
+            List<HolidayDetails> detailList = new List<HolidayDetails>();
 
-            try
-            {
-                var holiday = _context.Holidays.SingleOrDefault(h => h.Id == holidayId);
+            var allHolidays = _context.Holidays.ToList();
 
-                if(holiday != null)
-                {
-                    _context.Holidays.Remove(holiday);
-                    model.IsSuccess = true;
-                    model.Message = "Holidays removed successfully";
-                }
-                else
-                {
-                    model.IsSuccess = false;
-                    model.Message = "Holidays not found";
-                }
-            }
-            catch(Exception ex)
+            foreach(Holiday holiday in allHolidays)
             {
-                model.IsSuccess = false;
-                model.Message = "Error : " + ex.Message;
+                HolidayDetails details = new HolidayDetails();
+                details.Id = holiday.Id;
+                details.Name = holiday.Name;
+                details.StartDate = holiday.StartDate;
+                details.EndDate = holiday.EndDate;
+
+                detailList.Add(details);
             }
 
-            _context.SaveChanges();
-            return model;
+            return detailList;
         }
 
-        public List<Holiday>? GetAllHolidays()
+        public HolidayDetails? GetHolidayById(Guid holidayId)
         {
-            return _context.Holidays.ToList();
-        }
+            HolidayDetails details = new HolidayDetails();
 
-        public Holiday? GetHolidayById(Guid holidayId)
-        {
-            return _context.Holidays.FirstOrDefault(h => h.Id == holidayId);
-        }
+            var holidays = _context.Holidays.FirstOrDefault(h => h.Id == holidayId);
 
-        public ResponseModel SaveHoliday(Holiday holidayModel)
-        {
-            ResponseModel model = new ResponseModel();
-
-            try
+            if(holidays == null)
             {
-                var holiday = _context.Holidays.FirstOrDefault(h => h.Id != holidayModel.Id);
-
-                if(holiday != null)
-                {
-                    holiday.Name = holidayModel.Name;
-                    holiday.StartDate = holidayModel.StartDate;
-                    holiday.EndDate = holidayModel.EndDate;
-                    
-                    _context.Update(holiday);
-                    model.IsSuccess = true;
-                    model.Message = "Holidays updated successfully";
-                }
-                else
-                {
-                    _context.Holidays.Add(holidayModel);
-                    model.IsSuccess = true;
-                    model.Message = "Holidays added successfully";
-                }
-            }
-            catch (Exception ex)
-            {
-                model.IsSuccess = false;
-                model.Message = "Error : " + ex.Message;
+                return null;
             }
 
-            _context.SaveChanges();
-            return model;
+
+            details.Id = holidays.Id;
+            details.Name = holidays.Name;
+            details.StartDate = holidays.StartDate;
+            details.EndDate = holidays.EndDate;
+
+            return details;
+
         }
     }
 }

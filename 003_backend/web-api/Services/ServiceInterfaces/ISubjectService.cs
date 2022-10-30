@@ -1,15 +1,20 @@
 ﻿using web_api.Models;
 using web_api.Models.DetailModels;
+using web_api.CRUDModels;
 
 namespace web_api.Services.ServiceInterfaces
 {
     public interface ISubjectService
     {
-        ResponseModel SaveSubject(Subject subjectModel);
-        ResponseModel DeleteSubject(Guid subjectId);
-        Subject GetSubjectById(Guid subjectId);
-        List<Subject> GetAllSubjects();
+        SubjectDetails GetSubjectById(Guid subjectId);
+        List<SubjectDetails> GetAllSubjects();
         List<GradDetails> GetGradsOfSubject(Guid subjectId);
-        ResponseModel AddGradToSubject(Guid subjectId, Grad gradModel);
+            
+        ResponseModel CreateSubject(CreateSubjectModel createModel);
+        ResponseModel UpdateSubject(Guid subjectId, UpdateSubjectModel updateModel);
+
+        ResponseModel AddGradToSubject(Guid subjectId, Guid gradId);
+
+        ResponseModel DeleteSubject(Guid subjectId);
     }
 }

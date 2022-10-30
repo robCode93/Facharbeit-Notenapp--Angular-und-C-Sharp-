@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using web_api.CRUDModels;
 using web_api.Models;
 using web_api.Models.DetailModels;
 using web_api.Services.ServiceInterfaces;
@@ -98,49 +99,67 @@ namespace web_api.Services
             return model;
         }
 
-        public List<SchoolYear>? GetAllSchoolYears()
+        public List<SchoolYearDetails> GetAllSchoolYears()
         {
-            return _context.SchoolYears.ToList();
-        }
+            var schoolYears = _context.SchoolYears.Include(s => s.Subjects).Include(s => s.School).ToList();
 
-        public SchoolYear? GetSchoolYearById(Guid schoolYearId)
-        {
-            return _context.SchoolYears.FirstOrDefault(sy => sy.Id == schoolYearId);
-        }
+            List<SchoolYearDetails> detailList = new List<SchoolYearDetails>();
 
-        public ResponseModel SaveSchoolYear(SchoolYear schoolYearModel)
-        {
-            ResponseModel model = new ResponseModel();
-
-            try
+            foreach(SchoolYear schoolYear in schoolYears)
             {
-                var schoolYear = _context.SchoolYears.FirstOrDefault(sy => sy.Id == schoolYearModel.Id);
+                SchoolYearDetails details = new SchoolYearDetails();
+                details.Name = schoolYear.Name;
+                details.Id = schoolYear.Id;
 
-                if(schoolYear != null)
-                {
-                    schoolYear.School = schoolYearModel.School;
-                    schoolYear.Name = schoolYearModel.Name;
-                    schoolYear.Subjects = schoolYearModel.Subjects;
+                SchoolDetails schoolDetails = new SchoolDetails();
+                schoolDetails.Id = schoolYear.School.Id;
+                schoolDetails.Name = schoolYear.School.Name;
 
-                    _context.Update(schoolYear);
-                    model.IsSuccess = true;
-                    model.Message = "SchoolYear updated successfully";
-                }
-                else
+                foreach(Subject subject in schoolYear.Subjects)
                 {
-                    _context.SchoolYears.Add(schoolYearModel);
-                    model.IsSuccess = true;
-                    model.Message = "SchoolYear added successfully";
+                    SubjectDetails subjectDetails = new SubjectDetails();
+                    subjectDetails.Id = subject.Id;
+                    subjectDetails.Name = subject.Name;
+                    subjectDetails.ShortName = subject.ShortName;
+
+                    details.Subjects.Add(subjectDetails);
                 }
-            }
-            catch (Exception ex)
-            {
-                model.IsSuccess = false;
-                model.Message = "Error : " + ex.Message;
+
+                detailList.Add(details);
             }
 
-            _context.SaveChanges();
-            return model;
+            return detailList;
+        }
+
+        public SchoolYearDetails? GetSchoolYearById(Guid schoolYearId)
+        {
+            var schoolYear = _context.SchoolYears.Include(sy => sy.Subjects).Include(sy => sy.School).FirstOrDefault(sy => sy.Id == schoolYearId);
+
+            if(schoolYear == null)
+            {
+                return null;
+            }
+
+            SchoolYearDetails details = new SchoolYearDetails();
+            details.Name = schoolYear.Name;
+            details.Id = schoolYear.Id;
+
+            SchoolDetails schoolDetails = new SchoolDetails();
+            schoolDetails.Id = schoolYear.School.Id;
+            schoolDetails.Name = schoolYear.School.Name;
+
+            foreach (Subject subject in schoolYear.Subjects)
+            {
+                SubjectDetails subjectDetails = new SubjectDetails();
+                subjectDetails.Id = subject.Id;
+                subjectDetails.Name = subject.Name;
+                subjectDetails.ShortName = subject.ShortName;
+
+                details.Subjects.Add(subjectDetails);
+            }
+
+            return details;
+
         }
 
         public List<SubjectDetails> GetSubjectsOfSchoolYear(Guid schoolYearId)
@@ -150,7 +169,7 @@ namespace web_api.Services
             try
             {
                 detailList = new List<SubjectDetails>();
-                var schoolYear = _context.SchoolYears.FirstOrDefault(sy => sy.Id == schoolYearId);
+                var schoolYear = _context.SchoolYears.Include(sy => sy.Subjects).FirstOrDefault(sy => sy.Id == schoolYearId);
 
                 if(schoolYear != null)
                 {
@@ -174,6 +193,90 @@ namespace web_api.Services
             }
 
             return detailList;
+        }
+
+        
+
+        public ResponseModel CreateSchoolYear(CreateSchoolYearModel createModel)
+        {
+            ResponseModel model = new ResponseModel();
+
+            try
+            {
+                SchoolYear schoolYear = new SchoolYear();
+                schoolYear.Name = createModel.Name;
+                schoolYear.School = _context.Schools.FirstOrDefault(s => s.Id == createModel.School);
+
+                if(createModel.Subjects != null)
+                {
+                    foreach(Guid subjectId in createModel.Subjects)
+                    {
+                        schoolYear.Subjects.Add(_context.Subjects.FirstOrDefault(s => s.Id == subjectId));
+                    }
+                }
+
+                _context.SchoolYears.Add(schoolYear);
+                _context.SaveChanges();
+
+                model.IsSuccess = true;
+                model.Message = "Schoolyear added successfully";
+
+
+            }
+            catch(Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Message = "Error : " + ex.Message;
+            }
+
+            return model;
+        }
+
+        public ResponseModel UpdateSchoolYear(Guid schoolYearId, UpdateSchoolYearModel updateModel)
+        {
+            ResponseModel model = new ResponseModel();
+
+            try
+            {
+                var _temp = _context.SchoolYears.Include(sy => sy.School).Include(sy => sy.Subjects).FirstOrDefault(sy => sy.Id == schoolYearId);
+
+                if(_temp == null)
+                {
+                    model.IsSuccess = false;
+                    model.Message = "SchoolYear not found";
+                    return model;
+                }
+
+                _temp.Name = updateModel.Name;
+                _temp.School = _context.Schools.FirstOrDefault(s => s.Id == updateModel.School);
+
+                if(updateModel.Subjects == null)
+                {
+                    _temp.Subjects.Clear();
+                }
+                else
+                {
+                    _temp.Subjects.Clear();
+                    foreach(Guid subjectId in updateModel.Subjects)
+                    {
+                        _temp.Subjects.Add(_context.Subjects.FirstOrDefault(s => s.Id == subjectId));
+                    }
+                }
+
+                _context.Update(_temp);
+                _context.SaveChanges();
+
+                model.IsSuccess = true;
+                model.Message = "Schoolyear updated successfully";
+
+            }
+            catch (Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Message = "Error : " + ex.Message;
+            }
+
+            return model;
         }
     }
 }

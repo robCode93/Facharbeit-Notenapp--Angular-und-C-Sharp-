@@ -7,6 +7,7 @@ namespace web_api.Models
     {
         [Key]
         public Guid Id { get; set; }
+        public string subjectId { get; set; }
         public string? Name { get; set; }
         public string? ShortName { get; set; }
         public SchoolYear? SchoolYear { get; set; }

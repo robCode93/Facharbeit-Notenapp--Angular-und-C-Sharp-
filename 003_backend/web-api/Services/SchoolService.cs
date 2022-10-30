@@ -1,6 +1,8 @@
-﻿using web_api.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using web_api.Models;
 using web_api.Models.DetailModels;
 using web_api.Services.ServiceInterfaces;
+using web_api.CRUDModels;
 
 namespace web_api.Services
 {
@@ -14,79 +16,68 @@ namespace web_api.Services
             _context = context;
         }
 
-        public ResponseModel DeleteSchool(Guid schoolId)
+        public List<SchoolDetails> GetAllSchools()
         {
-            ResponseModel model = new ResponseModel();
+            List<SchoolDetails> detailList = new List<SchoolDetails>();
 
-            try
+            var schools = _context.Schools.Include(s => s.Holidays).ToList();
+
+            foreach(School school in schools)
             {
-                var school = _context.Schools.FirstOrDefault(s => s.Id == schoolId);
+                SchoolDetails details = new SchoolDetails();
+                details.Id = school.Id;
+                details.Name = school.Name;
+                details.FedState = school.FedState;
 
-                if(school != null)
+                foreach(Holiday holiday in school.Holidays)
                 {
-                    _context.Schools.Remove(school);
-                    model.IsSuccess = true;
-                    model.Message = "School removed successfully";
+                    HolidayDetails holidayDetails = new HolidayDetails();
+                    holidayDetails.Id = holiday.Id;
+                    holidayDetails.Name = holiday.Name;
+                    holidayDetails.StartDate = holiday.StartDate;
+                    holidayDetails.EndDate = holiday.EndDate;
+
+                    details.Holidays.Add(holidayDetails);
                 }
-                else
-                {
-                    model.IsSuccess = false;
-                    model.Message = "School not found";
-                }
-            }
-            catch (Exception ex)
-            {
-                model.IsSuccess = false;
-                model.Message = "Error : " + ex.Message;
+
+                
+
+                detailList.Add(details);
+
             }
 
-            _context.SaveChanges();
-            return model;
+            return detailList;
+
+
         }
 
-        public List<School>? GetAllSchools()
+        public SchoolDetails? GetSchoolById(Guid schoolId)
         {
-            return _context.Schools.ToList();
-        }
+            var school = _context.Schools.Include(s => s.Holidays).FirstOrDefault(s => s.Id == schoolId);
 
-        public School? GetSchoolById(Guid schoolId)
-        {
-            return _context.Schools.FirstOrDefault(s => s.Id == schoolId);
-        }
-
-        public ResponseModel SaveSchool(School schoolModel)
-        {
-            ResponseModel model = new ResponseModel();
-
-            try
+            if(school == null)
             {
-                var school = _context.Schools.FirstOrDefault(s => s.Id == schoolModel.Id);
-
-                if(school != null)
-                {
-                    school.FedState = schoolModel.FedState;
-                    school.Name = schoolModel.Name; 
-                    school.Holidays = schoolModel.Holidays;
-                    
-                    _context.Update(school);
-                    model.IsSuccess = true;
-                    model.Message = "School updated successfully";
-                }
-                else
-                {
-                    _context.Schools.Add(schoolModel);
-                    model.IsSuccess = true;
-                    model.Message = "School added successfully";
-                }
-            }
-            catch (Exception ex)
-            {
-                model.IsSuccess = false;
-                model.Message = "Error : " + ex.Message;
+                return null;
             }
 
-            _context.SaveChanges();
-            return model;
+            SchoolDetails details = new SchoolDetails();
+            details.Id = school.Id;
+            details.Name = school.Name;
+            details.FedState = school.FedState;
+
+            foreach (Holiday holiday in school.Holidays)
+            {
+                HolidayDetails holidayDetails = new HolidayDetails();
+                holidayDetails.Id = holiday.Id;
+                holidayDetails.Name = holiday.Name;
+                holidayDetails.StartDate = holiday.StartDate;
+                holidayDetails.EndDate = holiday.EndDate;
+
+                details.Holidays.Add(holidayDetails);
+            }
+
+            return details;
+
         }
 
         public List<HolidayDetails> GetHolidaysOfSchool(Guid schoolId)
@@ -96,7 +87,7 @@ namespace web_api.Services
             try
             {
                 detailList = new List<HolidayDetails>();
-                var school = _context.Schools.FirstOrDefault(s => s.Id == schoolId);
+                var school = _context.Schools.Include(s => s.Holidays).FirstOrDefault(s => s.Id == schoolId);
 
                 if( school != null)
                 {
@@ -121,6 +112,105 @@ namespace web_api.Services
             }
 
             return detailList;
+        }
+
+        public ResponseModel DeleteSchool(Guid schoolId)
+        {
+            ResponseModel model = new ResponseModel();
+
+            try
+            {
+                var school = _context.Schools.FirstOrDefault(s => s.Id == schoolId);
+
+                if (school != null)
+                {
+                    _context.Schools.Remove(school);
+                    model.IsSuccess = true;
+                    model.Message = "School removed successfully";
+                }
+                else
+                {
+                    model.IsSuccess = false;
+                    model.Message = "School not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Message = "Error : " + ex.Message;
+            }
+
+            _context.SaveChanges();
+            return model;
+        }
+
+        public ResponseModel CreateSchool(CreateSchoolModel createModel)
+        {
+            ResponseModel model = new ResponseModel();
+
+            try
+            {
+                School school = new School();
+
+                school.Name = createModel.Name;
+                school.FedState = createModel.FedState;
+
+                foreach(Guid id in createModel.Holidays)
+                {
+                    school.Holidays.Add(_context.Holidays.FirstOrDefault(h => h.Id == id));
+                }
+
+                _context.Schools.Add(school);
+                _context.SaveChanges();
+
+                model.IsSuccess = true;
+                model.Message = "School added successfully";
+                
+            }
+            catch(Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Message = "Error : " + ex.Message;
+            }
+
+            return model;
+        }
+
+        public ResponseModel UpdateSchool(Guid schoolId, UpdateSchoolModel updateModel)
+        {
+            ResponseModel model = new ResponseModel();
+
+            try
+            {
+                var _temp = _context.Schools.Include(s => s.Holidays).FirstOrDefault(s => s.Id == schoolId);
+
+                if (_temp == null)
+                {
+                    model.IsSuccess = false;
+                    model.Message = "School not found";
+                    return model;
+                }
+
+                _temp.Name = updateModel.Name;
+                _temp.Holidays.Clear();
+
+                foreach(Guid id in updateModel.Holidays)
+                {
+                    _temp.Holidays.Add(_context.Holidays.FirstOrDefault(h => h.Id == id));
+                }
+
+                _context.Update(_temp);
+                _context.SaveChanges();
+                model.IsSuccess = true;
+                model.Message = "School updated successfully";
+            }
+            catch(Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Message = "Error : " + ex.Message;
+            }
+
+            return model;
         }
     }
 }

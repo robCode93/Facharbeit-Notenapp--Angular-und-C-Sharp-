@@ -7,5 +7,6 @@
         public int? Points { get; set; }
         public DateTime? Date { get; set; }
         public string? Weight { get; set; }
+        public SubjectDetails? Subject { get; set; }
     }
 }

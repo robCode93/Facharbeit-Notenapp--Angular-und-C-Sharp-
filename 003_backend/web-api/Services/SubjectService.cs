@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using web_api.CRUDModels;
 using web_api.Models;
 using web_api.Models.DetailModels;
 using web_api.Services.ServiceInterfaces;
@@ -15,7 +16,7 @@ namespace web_api.Services
             _context = context;
         }
 
-        public ResponseModel AddGradToSubject(Guid subjectId, Grad gradModel)
+        public ResponseModel AddGradToSubject(Guid subjectId, Guid gradId)
         {
             ResponseModel model = new ResponseModel();
 
@@ -30,14 +31,14 @@ namespace web_api.Services
                     return model;
                 }
 
-                if (subject.Grads.Any(g => g.Id == gradModel.Id))
+                if (subject.Grads.Any(g => g.Id == gradId))
                 {
                     model.IsSuccess = true;
                     model.Message = "Grad already added to Subject";
                     return model;
                 }
 
-                subject.Grads.Add(gradModel);
+                subject.Grads.Add(_context.Grads.FirstOrDefault(g => g.Id == gradId));
                 model.IsSuccess = true;
                 model.Message = "Grad added to Subject successfully";
 
@@ -84,49 +85,71 @@ namespace web_api.Services
             return model;
         }
 
-        public List<Subject>? GetAllSubjects()
+        public List<SubjectDetails>? GetAllSubjects()
         {
-            return _context.Subjects.ToList();
-        }
+            List<SubjectDetails> detailsList = new List<SubjectDetails>();
 
-        public Subject? GetSubjectById(Guid subjectId)
-        {
-            return _context.Subjects.FirstOrDefault(s => s.Id == subjectId);
-        }
+            var allSubjects = _context.Subjects.Include(s => s.Grads).ToList();
 
-        public ResponseModel SaveSubject(Subject subjectModel)
-        {
-            ResponseModel model = new ResponseModel();
-
-            try
+            foreach(Subject subject in allSubjects)
             {
-                var subject = _context.Subjects.FirstOrDefault(s => s.Id == subjectModel.Id);
+                SubjectDetails details = new SubjectDetails();
+                details.Id = subject.Id;
+                details.Name = subject.Name;
+                details.ShortName = subject.ShortName;
 
-                if(subject != null)
+                if(subject.Grads != null)
                 {
-                    subject.Grads = subjectModel.Grads;
-                    subject.Name = subjectModel.Name;
-                    subject.ShortName = subjectModel.ShortName;
-                    
-                    _context.Update(subject);
-                    model.IsSuccess = true;
-                    model.Message = "Subject updated successfully";
+                    foreach (Grad grad in subject.Grads)
+                    {
+                        GradDetails gradDetails = new GradDetails();
+                        gradDetails.Id = grad.Id;
+                        gradDetails.Name = grad.Name;
+                        gradDetails.Date = grad.Date;
+                        gradDetails.Points = grad.Points;
+
+                        details.Grads.Add(gradDetails);
+                    }
                 }
-                else
-                {
-                    _context.Subjects.Add(subjectModel);
-                    model.IsSuccess = true;
-                    model.Message = "Subject added successfully";
-                }
-            }
-            catch(Exception ex)
-            {
-                model.IsSuccess = false;
-                model.Message = "Error : " + ex.Message;
+
+                detailsList.Add(details);
+
             }
 
-            _context.SaveChanges();
-            return model;
+            return detailsList;
+        }
+
+        public SubjectDetails? GetSubjectById(Guid subjectId)
+        {
+            var subject = _context.Subjects.Include(s => s.Grads).FirstOrDefault(s => s.Id == subjectId);
+
+            if(subject == null)
+            {
+                return null;
+            }
+
+            SubjectDetails details = new SubjectDetails();
+
+            details.Id = subject.Id;
+            details.Name = subject.Name;
+            details.ShortName = subject.ShortName;
+
+            if (subject.Grads != null)
+            {
+                foreach (Grad grad in subject.Grads)
+                {
+                    GradDetails gradDetails = new GradDetails();
+                    gradDetails.Id = grad.Id;
+                    gradDetails.Name = grad.Name;
+                    gradDetails.Date = grad.Date;
+                    gradDetails.Points = grad.Points;
+
+                    details.Grads.Add(gradDetails);
+                }
+            }
+
+            return details;
+
         }
 
         public List<GradDetails> GetGradsOfSubject(Guid subjectId)
@@ -136,7 +159,7 @@ namespace web_api.Services
             try
             {
                 detailList = new List<GradDetails>();
-                var subject = _context.Subjects.FirstOrDefault(s => s.Id == subjectId);
+                var subject = _context.Subjects.Include(s => s.Grads).FirstOrDefault(s => s.Id == subjectId);
 
                 if(subject != null)
                 {
@@ -162,6 +185,91 @@ namespace web_api.Services
             }
 
             return detailList;
+        }
+
+
+        public ResponseModel CreateSubject(CreateSubjectModel createModel)
+        {
+            ResponseModel model = new ResponseModel();
+
+            try
+            {
+                Subject subject = new Subject();
+
+                subject.Name = createModel.Name;
+                subject.ShortName = createModel.ShortName;
+                subject.subjectId = createModel.SubjectId;
+                subject.SchoolYear = _context.SchoolYears.FirstOrDefault(sy => sy.Id == createModel.SchoolYear);
+
+                if(createModel.Grads != null)
+                {
+                    foreach(Guid gradId in createModel.Grads)
+                    {
+                        subject.Grads.Add(_context.Grads.FirstOrDefault(g => g.Id == gradId));
+                    }
+                }
+
+                _context.Subjects.Add(subject);
+                _context.SaveChanges();
+
+                model.IsSuccess = true;
+                model.Message = "Subject added successfully";
+
+            }
+            catch(Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Message = "Error : " + ex.Message;
+            }
+
+            return model;
+        }
+
+        public ResponseModel UpdateSubject(Guid subjectId, UpdateSubjectModel updateModel)
+        {
+            ResponseModel model = new ResponseModel();
+
+            try
+            {
+                var _temp = _context.Subjects.Include(s => s.Grads).FirstOrDefault(s => s.Id == subjectId);
+
+                if(_temp == null)
+                {
+                    model.IsSuccess = false;
+                    model.Message = "Subject not found";
+                }
+
+                _temp.Name = updateModel.Name;
+                _temp.ShortName = updateModel.ShortName;
+                _temp.subjectId = updateModel.SubjectId;
+                _temp.SchoolYear = _context.SchoolYears.FirstOrDefault(sy => sy.Id == updateModel.SchoolYear);
+
+                if (updateModel.Grads == null)
+                {
+                    _temp.Grads.Clear();
+                }
+                else
+                {
+                    _temp.Grads.Clear();
+                    foreach (Guid gradId in updateModel.Grads)
+                    {
+                        _temp.Grads.Add(_context.Grads.FirstOrDefault(g => g.Id == gradId));
+                    }
+                }
+
+                _context.Update(_temp);
+                _context.SaveChanges();
+
+                model.IsSuccess = true;
+                model.Message = "";
+            }
+            catch (Exception ex)
+            {
+                model.IsSuccess = false;
+                model.Message = "Error : " + ex.Message;
+            }
+
+            return model;
         }
     }
 }
