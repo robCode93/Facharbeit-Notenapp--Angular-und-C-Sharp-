@@ -4,7 +4,7 @@ using web_api.Models.DetailModels;
 
 namespace web_api.CRUDModels
 {
-    public class UpdateSchoolModel
+    public class UpdateSubjectModel
     {
         [Required]
         public string Name { get; set; }

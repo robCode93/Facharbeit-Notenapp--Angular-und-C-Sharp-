@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using web_api.CRUDModels;
 using web_api.Models;
 using web_api.Models.DetailModels;
 using web_api.Services.ServiceInterfaces;
@@ -20,7 +21,7 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("{id}/[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(School))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolDetails))]
         public IActionResult GetSchoolById([FromRoute] Guid id)
         {
             try
@@ -36,7 +37,7 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(School[]))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolDetails[]))]
         public IActionResult GetAllSchools()
         {
             try
@@ -68,11 +69,26 @@ namespace web_api.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult SaveSchool(School schoolModel)
+        public IActionResult CreateSchool(CreateSchoolModel createModel)
         {
             try
             {
-                var model = _schoolService.SaveSchool(schoolModel);
+                var model = _schoolService.CreateSchool(createModel);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPatch]
+        [Route("[action]/{id}")]
+        public IActionResult UpdateSchool([FromRoute] Guid id, UpdateSubjectModel updateModel)
+        {
+            try
+            {
+                var model = _schoolService.UpdateSchool(id, updateModel);
                 return Ok(model);
             }
             catch (Exception)

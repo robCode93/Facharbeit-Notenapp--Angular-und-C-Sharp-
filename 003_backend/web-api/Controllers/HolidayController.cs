@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using web_api.Models;
+using web_api.Models.DetailModels;
 using web_api.Services.ServiceInterfaces;
 
 namespace web_api.Controllers
@@ -18,7 +19,7 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("{id}/[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Holiday))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HolidayDetails))]
         public IActionResult GetHolidayById([FromRoute] Guid id)
         {
             try
@@ -34,7 +35,7 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Holiday[]))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HolidayDetails[]))]
         public IActionResult GetAllHolidays()
         {
             try
@@ -48,35 +49,8 @@ namespace web_api.Controllers
             }
         }
 
-        [HttpDelete]
-        [Route("{id}/[action]")]
-        public IActionResult DeleteHoliday([FromRoute] Guid id)
-        {
-            try
-            {
-                var model = _service.DeleteHoliday(id);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
+        
 
-        [HttpPost]
-        [Route("[action]")]
-        public IActionResult SaveHolidays(Holiday holidayModel)
-        {
-            try
-            {
-                var model = _service.SaveHoliday(holidayModel);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
 
 
     }

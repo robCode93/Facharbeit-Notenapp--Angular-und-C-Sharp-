@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using web_api.CRUDModels;
 using web_api.Models;
 using web_api.Models.DetailModels;
 using web_api.Services.ServiceInterfaces;
@@ -20,7 +21,7 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("{id}/[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolYear))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolYearDetails))]
         public IActionResult GetSchoolYearById([FromRoute] Guid id)
         {
             try
@@ -36,7 +37,7 @@ namespace web_api.Controllers
 
         [HttpGet]
         [Route("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolYear[]))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolYearDetails[]))]
         public IActionResult GetAllSchoolYears()
         {
             try
@@ -67,11 +68,26 @@ namespace web_api.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public IActionResult SaveSchoolYear(SchoolYear schoolYearModel)
+        public IActionResult CreateSchoolYear(CreateSchoolYearModel createModel)
         {
             try
             {
-                var model = _service.SaveSchoolYear(schoolYearModel);
+                var model = _service.CreateSchoolYear(createModel);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPatch]
+        [Route("[action]/{id}")]
+        public IActionResult UpdateSchoolYear([FromRoute] Guid id, UpdateSchoolYearModel updateModel)
+        {
+            try
+            {
+                var model = _service.UpdateSchoolYear(id, updateModel);
                 return Ok(model);
             }
             catch (Exception)
