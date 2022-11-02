@@ -1,0 +1,35 @@
+<div class="container">
+
+    <h3>
+        {{title}}
+        <small class="text-muted">{{subTitle}}</small>
+    </h3>
+
+
+    <div *ngIf="availableSchoolYears.length === 0" class="container mt-5 d-flex justify-content-center">
+        <button type="button" class="btn btn-primary btn-lg" (click)="navigate('/syadd')">Hinzufügen</button>
+    </div>
+    
+    
+    <div>
+        <div *ngIf="availableSchoolYears.length > 0">
+            <div *ngFor="let schoolYear of availableSchoolYears">
+        
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">{{schoolYear.name}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted" *ngIf="schoolYear.school !== null">{{schoolYear.school}}</h6>
+                        <small>{{schoolYear.id}}</small>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+
+</div>
+
+
+  
+

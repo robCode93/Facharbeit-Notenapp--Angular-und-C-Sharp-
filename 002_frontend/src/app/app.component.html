@@ -1,12 +1,42 @@
-<div class="p-5 mb-4 bg-light">
-    <div class="container-fluid py-5">
-      <h1 class="display-5 fw-bold">Noten-App</h1>
-      <p class="col-md-8 fs-4">Speicher deine Noten, Arbeiten und Termine</p>
+<div class="mb-5">
+    <div class="p-5 bg-light">
+        <div class="container-fluid py-5">
+          <h1 class="display-5 fw-bold">{{title}}</h1>
+          <p class="col-md-8 fs-4"></p>
+        </div>
     </div>
-  </div>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">Navbar</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="syview">Schuljahre</a>
+                </li>
 
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Hinzufügen
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Noten</a></li>
+                  <li><a class="dropdown-item" href="#">Termine</a></li>>
+                </ul>
+              </li>
 
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" routerLink="syview">Kalender</a>
+            </li>
 
+            </ul>
 
+          </div>
+        </div>
+      </nav>
+</div>
 
 <router-outlet></router-outlet>
