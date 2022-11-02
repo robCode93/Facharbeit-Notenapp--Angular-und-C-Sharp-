@@ -176,7 +176,7 @@ namespace web_api.Services
             return model;
         }
 
-        public ResponseModel UpdateSchool(Guid schoolId, UpdateSubjectModel updateModel)
+        public ResponseModel UpdateSchool(Guid schoolId, UpdateSchoolModel updateModel)
         {
             ResponseModel model = new ResponseModel();
 

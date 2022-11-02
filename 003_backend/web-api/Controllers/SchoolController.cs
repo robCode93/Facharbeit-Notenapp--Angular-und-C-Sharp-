@@ -84,7 +84,7 @@ namespace web_api.Controllers
 
         [HttpPatch]
         [Route("[action]/{id}")]
-        public IActionResult UpdateSchool([FromRoute] Guid id, UpdateSubjectModel updateModel)
+        public IActionResult UpdateSchool([FromRoute] Guid id, UpdateSchoolModel updateModel)
         {
             try
             {

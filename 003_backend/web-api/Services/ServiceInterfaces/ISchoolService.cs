@@ -11,7 +11,7 @@ namespace web_api.Services.ServiceInterfaces
         List<HolidayDetails> GetHolidaysOfSchool(Guid schoolId);
 
         ResponseModel CreateSchool(CreateSchoolModel createModel);
-        ResponseModel UpdateSchool(Guid schoolId, UpdateSubjectModel updateModel);
+        ResponseModel UpdateSchool(Guid schoolId, UpdateSchoolModel updateModel);
 
         ResponseModel DeleteSchool(Guid schoolId);
 
