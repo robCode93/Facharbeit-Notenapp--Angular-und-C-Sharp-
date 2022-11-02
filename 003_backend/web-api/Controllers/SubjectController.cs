@@ -18,22 +18,8 @@ namespace web_api.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        [Route("{id}/[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SubjectDetails))]
-        public IActionResult GetSubjectById([FromRoute] Guid id)
-        {
-            try
-            {
-                var model = _service.GetSubjectById(id);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
 
+        // ########## GET-Methoden ##########
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SubjectDetails[]))]
@@ -50,43 +36,14 @@ namespace web_api.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("{id}/[action]")]
-        public IActionResult DeleteSubject([FromRoute] Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SubjectDetails))]
+        public IActionResult GetSubjectById([FromRoute] Guid id)
         {
             try
             {
-                var model = _service.DeleteSubject(id);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPost]
-        [Route("[action]")]
-        public IActionResult CreateSubject(CreateSubjectModel createModel)
-        {
-            try
-            {
-                var model = _service.CreateSubject(createModel);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPatch]
-        [Route("[action]/{id}")]
-        public IActionResult UpdateSubject([FromRoute] Guid id, UpdateSubjectModel updateModel)
-        {
-            try
-            {
-                var model = _service.UpdateSubject(id, updateModel);
+                var model = _service.GetSubjectById(id);
                 return Ok(model);
             }
             catch (Exception)
@@ -111,7 +68,40 @@ namespace web_api.Controllers
             }
         }
 
-        [HttpGet]
+        // ########## POST-Methoden ##########
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult CreateSubject(CreateSubjectModel createModel)
+        {
+            try
+            {
+                var model = _service.CreateSubject(createModel);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        // ########## PATCH-Methoden ##########
+        [HttpPatch]
+        [Route("[action]/{id}")]
+        public IActionResult UpdateSubject([FromRoute] Guid id, UpdateSubjectModel updateModel)
+        {
+            try
+            {
+                var model = _service.UpdateSubject(id, updateModel);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPatch]
         [Route("{subId}/[action]/{gradId}")]
         public IActionResult AddGradToSubject([FromRoute] Guid subId, [FromRoute] Guid gradId)
         {
@@ -125,6 +115,25 @@ namespace web_api.Controllers
                 return BadRequest();
             }
         }
+
+        // ########## DELETE-Methoden ##########
+        [HttpDelete]
+        [Route("{id}/[action]")]
+        public IActionResult DeleteSubject([FromRoute] Guid id)
+        {
+            try
+            {
+                var model = _service.DeleteSubject(id);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
+
 
 
 

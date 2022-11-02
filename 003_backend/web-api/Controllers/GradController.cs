@@ -18,22 +18,7 @@ namespace web_api.Controllers
             this.gradService = gradService;
         }
 
-        [HttpGet]
-        [Route("{id}/[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GradDetails))]
-        public IActionResult GetGradById([FromRoute] Guid id)
-        {
-            try
-            {
-                var model = gradService.GetGradById(id);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
+        // ########## GET-Methoden ##########
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GradDetails[]))]
@@ -50,13 +35,14 @@ namespace web_api.Controllers
             }
         }
 
-        [HttpPatch]
-        [Route("[action]/{id}")]
-        public IActionResult UpdateGrad([FromRoute] Guid id, UpdateGradModel updateModel)
+        [HttpGet]
+        [Route("{id}/[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GradDetails))]
+        public IActionResult GetGradById([FromRoute] Guid id)
         {
             try
             {
-                var model = gradService.UpdateGrad(id, updateModel);
+                var model = gradService.GetGradById(id);
                 return Ok(model);
             }
             catch (Exception)
@@ -65,6 +51,8 @@ namespace web_api.Controllers
             }
         }
 
+
+        // ########## POST-Methoden ##########
         [HttpPost]
         [Route("[action]")]
         public IActionResult CreateGrad(CreateGradModel createModel)
@@ -80,6 +68,25 @@ namespace web_api.Controllers
             }
         }
 
+
+        // ########## PATCH-Methoden ##########
+        [HttpPatch]
+        [Route("[action]/{id}")]
+        public IActionResult UpdateGrad([FromRoute] Guid id, UpdateGradModel updateModel)
+        {
+            try
+            {
+                var model = gradService.UpdateGrad(id, updateModel);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        // ########## DELETE-Methoden ##########
         [HttpDelete]
         [Route("{id}/[action]")]
         public IActionResult DeleteGrad([FromRoute] Guid id)

@@ -17,6 +17,9 @@ namespace web_api.Controllers
             _service = service;
         }
 
+
+
+        // ########## GET-MEthoden ##########
         [HttpGet]
         [Route("{id}/[action]")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HolidayDetails))]
@@ -49,7 +52,24 @@ namespace web_api.Controllers
             }
         }
 
-        
+        // ########## POST-MEthoden ##########
+
+
+        // ########## PATCH-MEthoden ##########
+
+
+        // ########## DELETE-MEthoden ##########
+
+
+
+
+
+
+
+
+
+
+
 
 
 

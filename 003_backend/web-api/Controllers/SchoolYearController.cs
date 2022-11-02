@@ -19,22 +19,8 @@ namespace web_api.Controllers
         }
 
 
-        [HttpGet]
-        [Route("{id}/[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolYearDetails))]
-        public IActionResult GetSchoolYearById([FromRoute] Guid id)
-        {
-            try
-            {
-                var model = _service.GetSchoolYearById(id);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
 
+        // ########## GET-Methoden ##########
         [HttpGet]
         [Route("[action]")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolYearDetails[]))]
@@ -51,58 +37,14 @@ namespace web_api.Controllers
             }
         }
 
-        [HttpDelete]
+        [HttpGet]
         [Route("{id}/[action]")]
-        public IActionResult DeleteSchoolYear([FromRoute] Guid id)
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolYearDetails))]
+        public IActionResult GetSchoolYearById([FromRoute] Guid id)
         {
             try
             {
-                var model = _service.DeleteSchoolYear(id);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPost]
-        [Route("[action]")]
-        public IActionResult CreateSchoolYear(CreateSchoolYearModel createModel)
-        {
-            try
-            {
-                var model = _service.CreateSchoolYear(createModel);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPatch]
-        [Route("[action]/{id}")]
-        public IActionResult UpdateSchoolYear([FromRoute] Guid id, UpdateSchoolYearModel updateModel)
-        {
-            try
-            {
-                var model = _service.UpdateSchoolYear(id, updateModel);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPost]
-        [Route("{yearId}/[action]/{subId}")]
-        public IActionResult AddSubjectToSchoolYear([FromRoute] Guid yearId, [FromRoute] Guid subId)
-        {
-            try
-            {
-                var model = _service.AddSubjectToSchoolYear(yearId, subId);
+                var model = _service.GetSchoolYearById(id);
                 return Ok(model);
             }
             catch (Exception)
@@ -126,6 +68,78 @@ namespace web_api.Controllers
                 return BadRequest();
             }
         }
+
+
+        // ########## POST-Methoden ##########
+        [HttpPost]
+        [Route("[action]")]
+        public IActionResult CreateSchoolYear(CreateSchoolYearModel createModel)
+        {
+            try
+            {
+                var model = _service.CreateSchoolYear(createModel);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        // ########## PATCH-Methoden ##########
+        [HttpPatch]
+        [Route("[action]/{id}")]
+        public IActionResult UpdateSchoolYear([FromRoute] Guid id, UpdateSchoolYearModel updateModel)
+        {
+            try
+            {
+                var model = _service.UpdateSchoolYear(id, updateModel);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPatch]
+        [Route("{yearId}/[action]/{subId}")]
+        public IActionResult AddSubjectToSchoolYear([FromRoute] Guid yearId, [FromRoute] Guid subId)
+        {
+            try
+            {
+                var model = _service.AddSubjectToSchoolYear(yearId, subId);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+
+        // ########## DELETE-Methoden ##########
+        [HttpDelete]
+        [Route("{id}/[action]")]
+        public IActionResult DeleteSchoolYear([FromRoute] Guid id)
+        {
+            try
+            {
+                var model = _service.DeleteSchoolYear(id);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
+        
+
+    
+
+    
 
 
     }

@@ -19,14 +19,15 @@ namespace web_api.Controllers
         }
 
 
+        // ########## GET-Methoden ##########
         [HttpGet]
-        [Route("{id}/[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolDetails))]
-        public IActionResult GetSchoolById([FromRoute] Guid id)
+        [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolDetails[]))]
+        public IActionResult GetAllSchools()
         {
             try
             {
-                var model = _schoolService.GetSchoolById(id);
+                var model = _schoolService.GetAllSchools();
                 return Ok(model);
             }
             catch (Exception)
@@ -36,13 +37,13 @@ namespace web_api.Controllers
         }
 
         [HttpGet]
-        [Route("[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolDetails[]))]
-        public IActionResult GetAllSchools()
+        [Route("{id}/[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SchoolDetails))]
+        public IActionResult GetSchoolById([FromRoute] Guid id)
         {
             try
             {
-                var model = _schoolService.GetAllSchools();
+                var model = _schoolService.GetSchoolById(id);
                 return Ok(model);
             }
             catch (Exception)
@@ -67,6 +68,7 @@ namespace web_api.Controllers
             }
         }
 
+        // ########## POST-Methoden ##########
         [HttpPost]
         [Route("[action]")]
         public IActionResult CreateSchool(CreateSchoolModel createModel)
@@ -82,6 +84,7 @@ namespace web_api.Controllers
             }
         }
 
+        // ########## PATCH-Methoden ##########
         [HttpPatch]
         [Route("[action]/{id}")]
         public IActionResult UpdateSchool([FromRoute] Guid id, UpdateSchoolModel updateModel)
@@ -97,6 +100,7 @@ namespace web_api.Controllers
             }
         }
 
+        // ########## DELETE-Methoden ##########
         [HttpDelete]
         [Route("{id}/[action]")]
         public IActionResult DeleteSchool([FromRoute] Guid id)
@@ -111,6 +115,20 @@ namespace web_api.Controllers
                 return BadRequest();
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        
 
 
     }
