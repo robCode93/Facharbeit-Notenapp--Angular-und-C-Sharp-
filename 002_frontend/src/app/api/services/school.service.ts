@@ -9,8 +9,10 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
+import { CreateSchoolModel } from '../models/create-school-model';
 import { HolidayDetails } from '../models/holiday-details';
-import { School } from '../models/school';
+import { SchoolDetails } from '../models/school-details';
+import { UpdateSchoolModel } from '../models/update-school-model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +23,97 @@ export class SchoolService extends BaseService {
     http: HttpClient
   ) {
     super(config, http);
+  }
+
+  /**
+   * Path part for operation apiSchoolGetAllSchoolsGet
+   */
+  static readonly ApiSchoolGetAllSchoolsGetPath = '/api/School/GetAllSchools';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSchoolGetAllSchoolsGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSchoolGetAllSchoolsGet$Plain$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<SchoolDetails>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolGetAllSchoolsGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: 'text/plain',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<SchoolDetails>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSchoolGetAllSchoolsGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSchoolGetAllSchoolsGet$Plain(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<SchoolDetails>> {
+
+    return this.apiSchoolGetAllSchoolsGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<SchoolDetails>>) => r.body as Array<SchoolDetails>)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSchoolGetAllSchoolsGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSchoolGetAllSchoolsGet$Json$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<SchoolDetails>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolGetAllSchoolsGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<SchoolDetails>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSchoolGetAllSchoolsGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSchoolGetAllSchoolsGet$Json(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<SchoolDetails>> {
+
+    return this.apiSchoolGetAllSchoolsGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<SchoolDetails>>) => r.body as Array<SchoolDetails>)
+    );
   }
 
   /**
@@ -38,7 +131,7 @@ export class SchoolService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<School>> {
+): Observable<StrictHttpResponse<SchoolDetails>> {
 
     const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolIdGetSchoolByIdGetPath, 'get');
     if (params) {
@@ -52,7 +145,7 @@ export class SchoolService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<School>;
+        return r as StrictHttpResponse<SchoolDetails>;
       })
     );
   }
@@ -67,10 +160,10 @@ export class SchoolService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<School> {
+): Observable<SchoolDetails> {
 
     return this.apiSchoolIdGetSchoolByIdGet$Plain$Response(params).pipe(
-      map((r: StrictHttpResponse<School>) => r.body as School)
+      map((r: StrictHttpResponse<SchoolDetails>) => r.body as SchoolDetails)
     );
   }
 
@@ -84,7 +177,7 @@ export class SchoolService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<School>> {
+): Observable<StrictHttpResponse<SchoolDetails>> {
 
     const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolIdGetSchoolByIdGetPath, 'get');
     if (params) {
@@ -98,7 +191,7 @@ export class SchoolService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<School>;
+        return r as StrictHttpResponse<SchoolDetails>;
       })
     );
   }
@@ -113,101 +206,10 @@ export class SchoolService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<School> {
+): Observable<SchoolDetails> {
 
     return this.apiSchoolIdGetSchoolByIdGet$Json$Response(params).pipe(
-      map((r: StrictHttpResponse<School>) => r.body as School)
-    );
-  }
-
-  /**
-   * Path part for operation apiSchoolGetAllSchoolsGet
-   */
-  static readonly ApiSchoolGetAllSchoolsGetPath = '/api/School/GetAllSchools';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSchoolGetAllSchoolsGet$Plain()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSchoolGetAllSchoolsGet$Plain$Response(params?: {
-    context?: HttpContext
-  }
-): Observable<StrictHttpResponse<Array<School>>> {
-
-    const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolGetAllSchoolsGetPath, 'get');
-    if (params) {
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'text',
-      accept: 'text/plain',
-      context: params?.context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<School>>;
-      })
-    );
-  }
-
-  /**
-   * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiSchoolGetAllSchoolsGet$Plain$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSchoolGetAllSchoolsGet$Plain(params?: {
-    context?: HttpContext
-  }
-): Observable<Array<School>> {
-
-    return this.apiSchoolGetAllSchoolsGet$Plain$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<School>>) => r.body as Array<School>)
-    );
-  }
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSchoolGetAllSchoolsGet$Json()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSchoolGetAllSchoolsGet$Json$Response(params?: {
-    context?: HttpContext
-  }
-): Observable<StrictHttpResponse<Array<School>>> {
-
-    const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolGetAllSchoolsGetPath, 'get');
-    if (params) {
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'text/json',
-      context: params?.context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<School>>;
-      })
-    );
-  }
-
-  /**
-   * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiSchoolGetAllSchoolsGet$Json$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSchoolGetAllSchoolsGet$Json(params?: {
-    context?: HttpContext
-  }
-): Observable<Array<School>> {
-
-    return this.apiSchoolGetAllSchoolsGet$Json$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<School>>) => r.body as Array<School>)
+      map((r: StrictHttpResponse<SchoolDetails>) => r.body as SchoolDetails)
     );
   }
 
@@ -309,23 +311,23 @@ export class SchoolService extends BaseService {
   }
 
   /**
-   * Path part for operation apiSchoolSaveSchoolPost
+   * Path part for operation apiSchoolCreateSchoolPost
    */
-  static readonly ApiSchoolSaveSchoolPostPath = '/api/School/SaveSchool';
+  static readonly ApiSchoolCreateSchoolPostPath = '/api/School/CreateSchool';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSchoolSaveSchoolPost()` instead.
+   * To access only the response body, use `apiSchoolCreateSchoolPost()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiSchoolSaveSchoolPost$Response(params?: {
+  apiSchoolCreateSchoolPost$Response(params?: {
     context?: HttpContext
-    body?: School
+    body?: CreateSchoolModel
   }
 ): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolSaveSchoolPostPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolCreateSchoolPostPath, 'post');
     if (params) {
       rb.body(params.body, 'application/*+json');
     }
@@ -344,17 +346,71 @@ export class SchoolService extends BaseService {
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiSchoolSaveSchoolPost$Response()` instead.
+   * To access the full response (for headers, for example), `apiSchoolCreateSchoolPost$Response()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiSchoolSaveSchoolPost(params?: {
+  apiSchoolCreateSchoolPost(params?: {
     context?: HttpContext
-    body?: School
+    body?: CreateSchoolModel
   }
 ): Observable<void> {
 
-    return this.apiSchoolSaveSchoolPost$Response(params).pipe(
+    return this.apiSchoolCreateSchoolPost$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
+  /**
+   * Path part for operation apiSchoolUpdateSchoolIdPatch
+   */
+  static readonly ApiSchoolUpdateSchoolIdPatchPath = '/api/School/UpdateSchool/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSchoolUpdateSchoolIdPatch()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiSchoolUpdateSchoolIdPatch$Response(params: {
+    id: string;
+    context?: HttpContext
+    body?: UpdateSchoolModel
+  }
+): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SchoolService.ApiSchoolUpdateSchoolIdPatchPath, 'patch');
+    if (params) {
+      rb.path('id', params.id, {});
+      rb.body(params.body, 'application/*+json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSchoolUpdateSchoolIdPatch$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiSchoolUpdateSchoolIdPatch(params: {
+    id: string;
+    context?: HttpContext
+    body?: UpdateSchoolModel
+  }
+): Observable<void> {
+
+    return this.apiSchoolUpdateSchoolIdPatch$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }

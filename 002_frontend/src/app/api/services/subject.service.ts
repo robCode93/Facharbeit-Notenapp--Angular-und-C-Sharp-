@@ -9,9 +9,10 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { Grad } from '../models/grad';
+import { CreateSubjectModel } from '../models/create-subject-model';
 import { GradDetails } from '../models/grad-details';
-import { Subject } from '../models/subject';
+import { SubjectDetails } from '../models/subject-details';
+import { UpdateSubjectModel } from '../models/update-subject-model';
 
 @Injectable({
   providedIn: 'root',
@@ -22,6 +23,97 @@ export class SubjectService extends BaseService {
     http: HttpClient
   ) {
     super(config, http);
+  }
+
+  /**
+   * Path part for operation apiSubjectGetAllSubjectsGet
+   */
+  static readonly ApiSubjectGetAllSubjectsGetPath = '/api/Subject/GetAllSubjects';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSubjectGetAllSubjectsGet$Plain()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubjectGetAllSubjectsGet$Plain$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<SubjectDetails>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectGetAllSubjectsGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: 'text/plain',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<SubjectDetails>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSubjectGetAllSubjectsGet$Plain$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubjectGetAllSubjectsGet$Plain(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<SubjectDetails>> {
+
+    return this.apiSubjectGetAllSubjectsGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<SubjectDetails>>) => r.body as Array<SubjectDetails>)
+    );
+  }
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSubjectGetAllSubjectsGet$Json()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubjectGetAllSubjectsGet$Json$Response(params?: {
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<Array<SubjectDetails>>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectGetAllSubjectsGetPath, 'get');
+    if (params) {
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'json',
+      accept: 'text/json',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return r as StrictHttpResponse<Array<SubjectDetails>>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSubjectGetAllSubjectsGet$Json$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubjectGetAllSubjectsGet$Json(params?: {
+    context?: HttpContext
+  }
+): Observable<Array<SubjectDetails>> {
+
+    return this.apiSubjectGetAllSubjectsGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<SubjectDetails>>) => r.body as Array<SubjectDetails>)
+    );
   }
 
   /**
@@ -39,7 +131,7 @@ export class SubjectService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Subject>> {
+): Observable<StrictHttpResponse<SubjectDetails>> {
 
     const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectIdGetSubjectByIdGetPath, 'get');
     if (params) {
@@ -53,7 +145,7 @@ export class SubjectService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Subject>;
+        return r as StrictHttpResponse<SubjectDetails>;
       })
     );
   }
@@ -68,10 +160,10 @@ export class SubjectService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<Subject> {
+): Observable<SubjectDetails> {
 
     return this.apiSubjectIdGetSubjectByIdGet$Plain$Response(params).pipe(
-      map((r: StrictHttpResponse<Subject>) => r.body as Subject)
+      map((r: StrictHttpResponse<SubjectDetails>) => r.body as SubjectDetails)
     );
   }
 
@@ -85,7 +177,7 @@ export class SubjectService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Subject>> {
+): Observable<StrictHttpResponse<SubjectDetails>> {
 
     const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectIdGetSubjectByIdGetPath, 'get');
     if (params) {
@@ -99,7 +191,7 @@ export class SubjectService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Subject>;
+        return r as StrictHttpResponse<SubjectDetails>;
       })
     );
   }
@@ -114,203 +206,10 @@ export class SubjectService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<Subject> {
+): Observable<SubjectDetails> {
 
     return this.apiSubjectIdGetSubjectByIdGet$Json$Response(params).pipe(
-      map((r: StrictHttpResponse<Subject>) => r.body as Subject)
-    );
-  }
-
-  /**
-   * Path part for operation apiSubjectGetAllSubjectsGet
-   */
-  static readonly ApiSubjectGetAllSubjectsGetPath = '/api/Subject/GetAllSubjects';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSubjectGetAllSubjectsGet$Plain()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSubjectGetAllSubjectsGet$Plain$Response(params?: {
-    context?: HttpContext
-  }
-): Observable<StrictHttpResponse<Array<Subject>>> {
-
-    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectGetAllSubjectsGetPath, 'get');
-    if (params) {
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'text',
-      accept: 'text/plain',
-      context: params?.context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Subject>>;
-      })
-    );
-  }
-
-  /**
-   * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiSubjectGetAllSubjectsGet$Plain$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSubjectGetAllSubjectsGet$Plain(params?: {
-    context?: HttpContext
-  }
-): Observable<Array<Subject>> {
-
-    return this.apiSubjectGetAllSubjectsGet$Plain$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Subject>>) => r.body as Array<Subject>)
-    );
-  }
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSubjectGetAllSubjectsGet$Json()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSubjectGetAllSubjectsGet$Json$Response(params?: {
-    context?: HttpContext
-  }
-): Observable<StrictHttpResponse<Array<Subject>>> {
-
-    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectGetAllSubjectsGetPath, 'get');
-    if (params) {
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'json',
-      accept: 'text/json',
-      context: params?.context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Subject>>;
-      })
-    );
-  }
-
-  /**
-   * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiSubjectGetAllSubjectsGet$Json$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSubjectGetAllSubjectsGet$Json(params?: {
-    context?: HttpContext
-  }
-): Observable<Array<Subject>> {
-
-    return this.apiSubjectGetAllSubjectsGet$Json$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Subject>>) => r.body as Array<Subject>)
-    );
-  }
-
-  /**
-   * Path part for operation apiSubjectIdDeleteSubjectDelete
-   */
-  static readonly ApiSubjectIdDeleteSubjectDeletePath = '/api/Subject/{id}/DeleteSubject';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSubjectIdDeleteSubjectDelete()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSubjectIdDeleteSubjectDelete$Response(params: {
-    id: string;
-    context?: HttpContext
-  }
-): Observable<StrictHttpResponse<void>> {
-
-    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectIdDeleteSubjectDeletePath, 'delete');
-    if (params) {
-      rb.path('id', params.id, {});
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'text',
-      accept: '*/*',
-      context: params?.context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
-      })
-    );
-  }
-
-  /**
-   * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiSubjectIdDeleteSubjectDelete$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  apiSubjectIdDeleteSubjectDelete(params: {
-    id: string;
-    context?: HttpContext
-  }
-): Observable<void> {
-
-    return this.apiSubjectIdDeleteSubjectDelete$Response(params).pipe(
-      map((r: StrictHttpResponse<void>) => r.body as void)
-    );
-  }
-
-  /**
-   * Path part for operation apiSubjectSaveSubjectPost
-   */
-  static readonly ApiSubjectSaveSubjectPostPath = '/api/Subject/SaveSubject';
-
-  /**
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSubjectSaveSubjectPost()` instead.
-   *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
-   */
-  apiSubjectSaveSubjectPost$Response(params?: {
-    context?: HttpContext
-    body?: Subject
-  }
-): Observable<StrictHttpResponse<void>> {
-
-    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectSaveSubjectPostPath, 'post');
-    if (params) {
-      rb.body(params.body, 'application/*+json');
-    }
-
-    return this.http.request(rb.build({
-      responseType: 'text',
-      accept: '*/*',
-      context: params?.context
-    })).pipe(
-      filter((r: any) => r instanceof HttpResponse),
-      map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
-      })
-    );
-  }
-
-  /**
-   * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiSubjectSaveSubjectPost$Response()` instead.
-   *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
-   */
-  apiSubjectSaveSubjectPost(params?: {
-    context?: HttpContext
-    body?: Subject
-  }
-): Observable<void> {
-
-    return this.apiSubjectSaveSubjectPost$Response(params).pipe(
-      map((r: StrictHttpResponse<void>) => r.body as void)
+      map((r: StrictHttpResponse<SubjectDetails>) => r.body as SubjectDetails)
     );
   }
 
@@ -412,26 +311,24 @@ export class SubjectService extends BaseService {
   }
 
   /**
-   * Path part for operation apiSubjectSubIdAddGradToSubjectGet
+   * Path part for operation apiSubjectCreateSubjectPost
    */
-  static readonly ApiSubjectSubIdAddGradToSubjectGetPath = '/api/Subject/{subId}/AddGradToSubject';
+  static readonly ApiSubjectCreateSubjectPostPath = '/api/Subject/CreateSubject';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiSubjectSubIdAddGradToSubjectGet()` instead.
+   * To access only the response body, use `apiSubjectCreateSubjectPost()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiSubjectSubIdAddGradToSubjectGet$Response(params: {
-    subId: string;
+  apiSubjectCreateSubjectPost$Response(params?: {
     context?: HttpContext
-    body?: Grad
+    body?: CreateSubjectModel
   }
 ): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectSubIdAddGradToSubjectGetPath, 'get');
+    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectCreateSubjectPostPath, 'post');
     if (params) {
-      rb.path('subId', params.subId, {});
       rb.body(params.body, 'application/*+json');
     }
 
@@ -449,18 +346,176 @@ export class SubjectService extends BaseService {
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiSubjectSubIdAddGradToSubjectGet$Response()` instead.
+   * To access the full response (for headers, for example), `apiSubjectCreateSubjectPost$Response()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  apiSubjectSubIdAddGradToSubjectGet(params: {
-    subId: string;
+  apiSubjectCreateSubjectPost(params?: {
     context?: HttpContext
-    body?: Grad
+    body?: CreateSubjectModel
   }
 ): Observable<void> {
 
-    return this.apiSubjectSubIdAddGradToSubjectGet$Response(params).pipe(
+    return this.apiSubjectCreateSubjectPost$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
+  /**
+   * Path part for operation apiSubjectUpdateSubjectIdPatch
+   */
+  static readonly ApiSubjectUpdateSubjectIdPatchPath = '/api/Subject/UpdateSubject/{id}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSubjectUpdateSubjectIdPatch()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiSubjectUpdateSubjectIdPatch$Response(params: {
+    id: string;
+    context?: HttpContext
+    body?: UpdateSubjectModel
+  }
+): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectUpdateSubjectIdPatchPath, 'patch');
+    if (params) {
+      rb.path('id', params.id, {});
+      rb.body(params.body, 'application/*+json');
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSubjectUpdateSubjectIdPatch$Response()` instead.
+   *
+   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   */
+  apiSubjectUpdateSubjectIdPatch(params: {
+    id: string;
+    context?: HttpContext
+    body?: UpdateSubjectModel
+  }
+): Observable<void> {
+
+    return this.apiSubjectUpdateSubjectIdPatch$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
+  /**
+   * Path part for operation apiSubjectSubIdAddGradToSubjectGradIdPatch
+   */
+  static readonly ApiSubjectSubIdAddGradToSubjectGradIdPatchPath = '/api/Subject/{subId}/AddGradToSubject/{gradId}';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSubjectSubIdAddGradToSubjectGradIdPatch()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubjectSubIdAddGradToSubjectGradIdPatch$Response(params: {
+    subId: string;
+    gradId: string;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectSubIdAddGradToSubjectGradIdPatchPath, 'patch');
+    if (params) {
+      rb.path('subId', params.subId, {});
+      rb.path('gradId', params.gradId, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSubjectSubIdAddGradToSubjectGradIdPatch$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubjectSubIdAddGradToSubjectGradIdPatch(params: {
+    subId: string;
+    gradId: string;
+    context?: HttpContext
+  }
+): Observable<void> {
+
+    return this.apiSubjectSubIdAddGradToSubjectGradIdPatch$Response(params).pipe(
+      map((r: StrictHttpResponse<void>) => r.body as void)
+    );
+  }
+
+  /**
+   * Path part for operation apiSubjectIdDeleteSubjectDelete
+   */
+  static readonly ApiSubjectIdDeleteSubjectDeletePath = '/api/Subject/{id}/DeleteSubject';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `apiSubjectIdDeleteSubjectDelete()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubjectIdDeleteSubjectDelete$Response(params: {
+    id: string;
+    context?: HttpContext
+  }
+): Observable<StrictHttpResponse<void>> {
+
+    const rb = new RequestBuilder(this.rootUrl, SubjectService.ApiSubjectIdDeleteSubjectDeletePath, 'delete');
+    if (params) {
+      rb.path('id', params.id, {});
+    }
+
+    return this.http.request(rb.build({
+      responseType: 'text',
+      accept: '*/*',
+      context: params?.context
+    })).pipe(
+      filter((r: any) => r instanceof HttpResponse),
+      map((r: HttpResponse<any>) => {
+        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+      })
+    );
+  }
+
+  /**
+   * This method provides access to only to the response body.
+   * To access the full response (for headers, for example), `apiSubjectIdDeleteSubjectDelete$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  apiSubjectIdDeleteSubjectDelete(params: {
+    id: string;
+    context?: HttpContext
+  }
+): Observable<void> {
+
+    return this.apiSubjectIdDeleteSubjectDelete$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }

@@ -1,9 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
-export interface Grad {
-  date?: null | string;
-  id?: string;
+export interface UpdateGradModel {
   name?: null | string;
-  points?: null | number;
+  points?: number;
   weight?: null | string;
 }

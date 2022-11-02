@@ -52,6 +52,22 @@ namespace web_api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(HolidayDetails[]))]
+        public IActionResult GetHolidaysByFedState(string fedState)
+        {
+            try
+            {
+                var model = _service.GetHolidaysByFedState(fedState);
+                return Ok(model);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         // ########## POST-MEthoden ##########
 
 

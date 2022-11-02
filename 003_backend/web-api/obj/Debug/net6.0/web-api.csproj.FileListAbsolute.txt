@@ -123,3 +123,4 @@ C:\Users\rober\Documents\Abendschule\Facharbeit-Notenapp\003_backend\web-api\obj
 C:\Users\rober\Documents\Abendschule\Facharbeit-Notenapp\003_backend\web-api\obj\Debug\net6.0\ref\web-api.dll
 C:\Users\rober\Documents\Abendschule\Facharbeit-Notenapp\003_backend\web-api\obj\Debug\net6.0\web-api.pdb
 C:\Users\rober\Documents\Abendschule\Facharbeit-Notenapp\003_backend\web-api\obj\Debug\net6.0\web-api.genruntimeconfig.cache
+C:\Users\rober\Documents\Abendschule\Facharbeit-Notenapp\003_backend\web-api\obj\Debug\net6.0\web-api.csproj.AssemblyReference.cache

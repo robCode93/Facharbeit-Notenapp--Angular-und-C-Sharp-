@@ -7,5 +7,6 @@ namespace web_api.Services.ServiceInterfaces
     {
         List<HolidayDetails> GetAllHolidays();
         HolidayDetails GetHolidayById(Guid holidayId);
+        List<HolidayDetails> GetHolidaysByFedState(string fedstate);
     }
 }

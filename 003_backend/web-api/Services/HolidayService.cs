@@ -55,5 +55,33 @@ namespace web_api.Services
             return details;
 
         }
+
+        public List<HolidayDetails> GetHolidaysByFedState(string fedstate)
+        {
+            List<HolidayDetails> detailsList = new List<HolidayDetails>();
+
+            var allHolidays = _context.Holidays.ToList();
+
+            if(allHolidays != null)
+            {
+                foreach(Holiday holiday in allHolidays)
+                {
+                    if(holiday.FederalState == fedstate)
+                    {
+                        HolidayDetails details = new HolidayDetails();
+                        details.Name = holiday.Name;
+                        details.Id = holiday.Id;
+                        details.StartDate = holiday.StartDate;
+                        details.EndDate = holiday.EndDate;
+
+                        detailsList.Add(details);
+                    }
+                }
+            }
+
+            return detailsList;
+
+
+        }
     }
 }

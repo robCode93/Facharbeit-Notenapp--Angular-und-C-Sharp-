@@ -9,7 +9,7 @@ import { RequestBuilder } from '../request-builder';
 import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
-import { Holiday } from '../models/holiday';
+import { HolidayDetails } from '../models/holiday-details';
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +37,7 @@ export class HolidayService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Holiday>> {
+): Observable<StrictHttpResponse<HolidayDetails>> {
 
     const rb = new RequestBuilder(this.rootUrl, HolidayService.ApiHolidayIdGetHolidayByIdGetPath, 'get');
     if (params) {
@@ -51,7 +51,7 @@ export class HolidayService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Holiday>;
+        return r as StrictHttpResponse<HolidayDetails>;
       })
     );
   }
@@ -66,10 +66,10 @@ export class HolidayService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<Holiday> {
+): Observable<HolidayDetails> {
 
     return this.apiHolidayIdGetHolidayByIdGet$Plain$Response(params).pipe(
-      map((r: StrictHttpResponse<Holiday>) => r.body as Holiday)
+      map((r: StrictHttpResponse<HolidayDetails>) => r.body as HolidayDetails)
     );
   }
 
@@ -83,7 +83,7 @@ export class HolidayService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Holiday>> {
+): Observable<StrictHttpResponse<HolidayDetails>> {
 
     const rb = new RequestBuilder(this.rootUrl, HolidayService.ApiHolidayIdGetHolidayByIdGetPath, 'get');
     if (params) {
@@ -97,7 +97,7 @@ export class HolidayService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Holiday>;
+        return r as StrictHttpResponse<HolidayDetails>;
       })
     );
   }
@@ -112,10 +112,10 @@ export class HolidayService extends BaseService {
     id: string;
     context?: HttpContext
   }
-): Observable<Holiday> {
+): Observable<HolidayDetails> {
 
     return this.apiHolidayIdGetHolidayByIdGet$Json$Response(params).pipe(
-      map((r: StrictHttpResponse<Holiday>) => r.body as Holiday)
+      map((r: StrictHttpResponse<HolidayDetails>) => r.body as HolidayDetails)
     );
   }
 
@@ -133,7 +133,7 @@ export class HolidayService extends BaseService {
   apiHolidayGetAllHolidaysGet$Plain$Response(params?: {
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Array<Holiday>>> {
+): Observable<StrictHttpResponse<Array<HolidayDetails>>> {
 
     const rb = new RequestBuilder(this.rootUrl, HolidayService.ApiHolidayGetAllHolidaysGetPath, 'get');
     if (params) {
@@ -146,7 +146,7 @@ export class HolidayService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Holiday>>;
+        return r as StrictHttpResponse<Array<HolidayDetails>>;
       })
     );
   }
@@ -160,10 +160,10 @@ export class HolidayService extends BaseService {
   apiHolidayGetAllHolidaysGet$Plain(params?: {
     context?: HttpContext
   }
-): Observable<Array<Holiday>> {
+): Observable<Array<HolidayDetails>> {
 
     return this.apiHolidayGetAllHolidaysGet$Plain$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Holiday>>) => r.body as Array<Holiday>)
+      map((r: StrictHttpResponse<Array<HolidayDetails>>) => r.body as Array<HolidayDetails>)
     );
   }
 
@@ -176,7 +176,7 @@ export class HolidayService extends BaseService {
   apiHolidayGetAllHolidaysGet$Json$Response(params?: {
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<Array<Holiday>>> {
+): Observable<StrictHttpResponse<Array<HolidayDetails>>> {
 
     const rb = new RequestBuilder(this.rootUrl, HolidayService.ApiHolidayGetAllHolidaysGetPath, 'get');
     if (params) {
@@ -189,7 +189,7 @@ export class HolidayService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Holiday>>;
+        return r as StrictHttpResponse<Array<HolidayDetails>>;
       })
     );
   }
@@ -203,112 +203,107 @@ export class HolidayService extends BaseService {
   apiHolidayGetAllHolidaysGet$Json(params?: {
     context?: HttpContext
   }
-): Observable<Array<Holiday>> {
+): Observable<Array<HolidayDetails>> {
 
     return this.apiHolidayGetAllHolidaysGet$Json$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Holiday>>) => r.body as Array<Holiday>)
+      map((r: StrictHttpResponse<Array<HolidayDetails>>) => r.body as Array<HolidayDetails>)
     );
   }
 
   /**
-   * Path part for operation apiHolidayIdDeleteHolidayDelete
+   * Path part for operation apiHolidayGetHolidaysByFedStateGet
    */
-  static readonly ApiHolidayIdDeleteHolidayDeletePath = '/api/Holiday/{id}/DeleteHoliday';
+  static readonly ApiHolidayGetHolidaysByFedStateGetPath = '/api/Holiday/GetHolidaysByFedState';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiHolidayIdDeleteHolidayDelete()` instead.
+   * To access only the response body, use `apiHolidayGetHolidaysByFedStateGet$Plain()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiHolidayIdDeleteHolidayDelete$Response(params: {
-    id: string;
+  apiHolidayGetHolidaysByFedStateGet$Plain$Response(params?: {
+    fedState?: string;
     context?: HttpContext
   }
-): Observable<StrictHttpResponse<void>> {
+): Observable<StrictHttpResponse<Array<HolidayDetails>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, HolidayService.ApiHolidayIdDeleteHolidayDeletePath, 'delete');
+    const rb = new RequestBuilder(this.rootUrl, HolidayService.ApiHolidayGetHolidaysByFedStateGetPath, 'get');
     if (params) {
-      rb.path('id', params.id, {});
+      rb.query('fedState', params.fedState, {});
     }
 
     return this.http.request(rb.build({
       responseType: 'text',
-      accept: '*/*',
+      accept: 'text/plain',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+        return r as StrictHttpResponse<Array<HolidayDetails>>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiHolidayIdDeleteHolidayDelete$Response()` instead.
+   * To access the full response (for headers, for example), `apiHolidayGetHolidaysByFedStateGet$Plain$Response()` instead.
    *
    * This method doesn't expect any request body.
    */
-  apiHolidayIdDeleteHolidayDelete(params: {
-    id: string;
+  apiHolidayGetHolidaysByFedStateGet$Plain(params?: {
+    fedState?: string;
     context?: HttpContext
   }
-): Observable<void> {
+): Observable<Array<HolidayDetails>> {
 
-    return this.apiHolidayIdDeleteHolidayDelete$Response(params).pipe(
-      map((r: StrictHttpResponse<void>) => r.body as void)
+    return this.apiHolidayGetHolidaysByFedStateGet$Plain$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<HolidayDetails>>) => r.body as Array<HolidayDetails>)
     );
   }
 
   /**
-   * Path part for operation apiHolidaySaveHolidaysPost
-   */
-  static readonly ApiHolidaySaveHolidaysPostPath = '/api/Holiday/SaveHolidays';
-
-  /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `apiHolidaySaveHolidaysPost()` instead.
+   * To access only the response body, use `apiHolidayGetHolidaysByFedStateGet$Json()` instead.
    *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   * This method doesn't expect any request body.
    */
-  apiHolidaySaveHolidaysPost$Response(params?: {
+  apiHolidayGetHolidaysByFedStateGet$Json$Response(params?: {
+    fedState?: string;
     context?: HttpContext
-    body?: Holiday
   }
-): Observable<StrictHttpResponse<void>> {
+): Observable<StrictHttpResponse<Array<HolidayDetails>>> {
 
-    const rb = new RequestBuilder(this.rootUrl, HolidayService.ApiHolidaySaveHolidaysPostPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, HolidayService.ApiHolidayGetHolidaysByFedStateGetPath, 'get');
     if (params) {
-      rb.body(params.body, 'application/*+json');
+      rb.query('fedState', params.fedState, {});
     }
 
     return this.http.request(rb.build({
-      responseType: 'text',
-      accept: '*/*',
+      responseType: 'json',
+      accept: 'text/json',
       context: params?.context
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+        return r as StrictHttpResponse<Array<HolidayDetails>>;
       })
     );
   }
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `apiHolidaySaveHolidaysPost$Response()` instead.
+   * To access the full response (for headers, for example), `apiHolidayGetHolidaysByFedStateGet$Json$Response()` instead.
    *
-   * This method sends `application/*+json` and handles request body of type `application/*+json`.
+   * This method doesn't expect any request body.
    */
-  apiHolidaySaveHolidaysPost(params?: {
+  apiHolidayGetHolidaysByFedStateGet$Json(params?: {
+    fedState?: string;
     context?: HttpContext
-    body?: Holiday
   }
-): Observable<void> {
+): Observable<Array<HolidayDetails>> {
 
-    return this.apiHolidaySaveHolidaysPost$Response(params).pipe(
-      map((r: StrictHttpResponse<void>) => r.body as void)
+    return this.apiHolidayGetHolidaysByFedStateGet$Json$Response(params).pipe(
+      map((r: StrictHttpResponse<Array<HolidayDetails>>) => r.body as Array<HolidayDetails>)
     );
   }
 
