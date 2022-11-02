@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace web_api.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,6 +65,7 @@ namespace web_api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    subjectId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShortName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SchoolYearId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -88,7 +89,7 @@ namespace web_api.Migrations
                     Points = table.Column<int>(type: "int", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Weight = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,7 +98,8 @@ namespace web_api.Migrations
                         name: "FK_Grads_Subjects_SubjectId",
                         column: x => x.SubjectId,
                         principalTable: "Subjects",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

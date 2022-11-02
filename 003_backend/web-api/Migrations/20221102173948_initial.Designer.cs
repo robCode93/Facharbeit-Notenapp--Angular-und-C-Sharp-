@@ -12,8 +12,8 @@ using web_api.Models;
 namespace web_api.Migrations
 {
     [DbContext(typeof(WebAppContext))]
-    [Migration("20221102161132_renew")]
-    partial class renew
+    [Migration("20221102173948_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
