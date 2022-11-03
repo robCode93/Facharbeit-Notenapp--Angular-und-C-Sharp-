@@ -194,6 +194,13 @@ namespace web_api.Services
 
             try
             {
+                if(_context.Subjects.Any(s => s.subjectId == createModel.SubjectId))
+                {
+                    model.IsSuccess = false;
+                    model.Message = "Subject already exists";
+                    return model;
+                }
+
                 Subject subject = new Subject();
 
                 subject.Name = createModel.Name;
