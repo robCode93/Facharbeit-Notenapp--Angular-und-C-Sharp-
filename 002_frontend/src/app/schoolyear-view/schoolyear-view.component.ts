@@ -16,7 +16,7 @@ export class SchoolyearViewComponent implements OnInit {
   availableSchoolYears: SchoolYearDetails[] = [];
 
 
-  constructor(private schoolYearService: SchoolYearService, private router: Router) { 
+  constructor(private schoolYearService: SchoolYearService, private router: Router) {
 
     this.schoolYearService.apiSchoolYearGetAllSchoolYearsGet$Json().subscribe({
       next: sy => this.availableSchoolYears = sy

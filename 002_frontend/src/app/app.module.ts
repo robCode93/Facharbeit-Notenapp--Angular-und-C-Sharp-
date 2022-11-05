@@ -9,7 +9,6 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { SchoolyearViewComponent } from './schoolyear-view/schoolyear-view.component';
 import { SchoolyearAddComponent } from './schoolyear-add/schoolyear-add.component';
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +34,7 @@ import { SchoolyearAddComponent } from './schoolyear-add/schoolyear-add.componen
     ApiModule.forRoot({
       rootUrl: "http://localhost:7096"
     }),
-    
+
   ],
   providers: [],
   bootstrap: [AppComponent]

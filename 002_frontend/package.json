@@ -20,6 +20,7 @@
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
     "bootstrap": "^5.2.2",
+    "bootstrap-icons": "^1.9.1",
     "jquery": "^3.6.1",
     "ng-openapi-gen": "^0.23.0",
     "openapi": "^1.0.1",
