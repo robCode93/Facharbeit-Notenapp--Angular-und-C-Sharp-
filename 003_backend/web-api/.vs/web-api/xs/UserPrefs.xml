@@ -1,26 +1,11 @@
 ﻿<Properties StartupConfiguration="{3DB55AC3-899A-4B20-8D23-F71DADE20D82}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Properties/launchSettings.json">
-    <Files>
-      <File FileName="Models/Subject.cs" Line="1" Column="1" />
-      <File FileName="Services/SubjectService.cs" Line="1" Column="1" />
-      <File FileName="Services/ServiceInterfaces/ISubjectService.cs" Line="1" Column="1" />
-      <File FileName="Controllers/GradController.cs" Line="1" Column="1" />
-      <File FileName="Properties/launchSettings.json" Line="1" Column="1" />
-    </Files>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints />
+  <MonoDevelop.Ide.Workbench>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="web-api" expanded="True">
-            <Node name="web-api" expanded="True">
-              <Node name="Controllers" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Properties" expanded="True" />
-              <Node name="Services" expanded="True">
-                <Node name="ServiceInterfaces" expanded="True">
-                  <Node name="ISchoolService.cs" selected="True" />
-                </Node>
-              </Node>
-            </Node>
+          <Node name="web-api" expanded="True" selected="True">
+            <Node name="web-api" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -29,11 +14,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.ItemProperties.web-api PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.NotenAppApiTest FirstBuild="True" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.web-api PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>
