@@ -33,4 +33,15 @@
     <None Remove="Moq" />
     <None Remove="FluentAssertions" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="GradServiceTests\" />
+    <Folder Include="HolidayServiceTests\" />
+    <Folder Include="SchoolServiceTests\" />
+    <Folder Include="SchoolYearServiceTests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\web-api\web-api.csproj" />
+  </ItemGroup>
 </Project>
