@@ -48,7 +48,7 @@ namespace NotenAppApiTest.SubjectServiceTests
 
             // Assert
             result.Should().BeEmpty();
-            WebAppContext.Subjects.Should().BeEmpty();
+            WebAppContext.Subjects.Should().HaveCount(0);
         }
 
 

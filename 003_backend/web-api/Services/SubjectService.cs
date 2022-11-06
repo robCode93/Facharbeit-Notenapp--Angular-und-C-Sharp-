@@ -85,7 +85,7 @@ namespace web_api.Services
             return model;
         }
 
-        public List<SubjectDetails>? GetAllSubjects()
+        public List<SubjectDetails> GetAllSubjects()
         {
             List<SubjectDetails> detailsList = new List<SubjectDetails>();
 

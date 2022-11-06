@@ -1,22 +1,21 @@
 ﻿<Properties StartupConfiguration="{3DB55AC3-899A-4B20-8D23-F71DADE20D82}|Default">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../../../../usr/local/share/dotnet/sdk/6.0.402/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets">
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="../NotenAppApiTest/SubjectServiceTests/AddGradToSubject.cs">
     <Files>
-      <File FileName="../NotenAppApiTest/SubjectServiceTests/GetAllSubjects.cs" Line="27" Column="53" />
-      <File FileName="../../../../../../../usr/local/share/dotnet/sdk/6.0.402/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets" Line="267" Column="5" />
+      <File FileName="Services/SubjectService.cs" Line="1" Column="1" />
+      <File FileName="../NotenAppApiTest/SubjectServiceTests/AddGradToSubject.cs" Line="7" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="web-api" expanded="True">
-            <Node name="NotenAppApiTest" expanded="True">
-              <Node name="SubjectServiceTests" expanded="True">
-                <Node name="GetAllSubjects.cs" selected="True" />
+            <Node name="web-api" expanded="True">
+              <Node name="Services" expanded="True">
+                <Node name="ServiceInterfaces" expanded="True" />
               </Node>
             </Node>
-            <Node name="web-api" expanded="True" />
           </Node>
         </State>
       </Pad>
@@ -30,8 +29,8 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.ItemProperties.web-api PreferredExecutionTarget="/Applications/Google Chrome.app" />
 </Properties>

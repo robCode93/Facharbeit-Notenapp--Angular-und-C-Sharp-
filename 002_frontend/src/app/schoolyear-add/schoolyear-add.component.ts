@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { SchoolYearService } from '../api/services';
 
 @Component({
   selector: 'app-schoolyear-add',
@@ -7,7 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchoolyearAddComponent implements OnInit {
 
-  constructor() { }
+  title: string = "Schuljahr hinzufügen";
+  subTitle: string = "Lege ein neues Schuljahr an";
+
+  constructor(private schoolYearService: SchoolYearService, private router: Router) { }
 
   ngOnInit(): void {
   }
