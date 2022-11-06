@@ -1,10 +1,21 @@
 ﻿<Properties StartupConfiguration="{3DB55AC3-899A-4B20-8D23-F71DADE20D82}|Default">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="../../../../../../../usr/local/share/dotnet/sdk/6.0.402/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets">
+    <Files>
+      <File FileName="../NotenAppApiTest/SubjectServiceTests/GetAllSubjects.cs" Line="27" Column="53" />
+      <File FileName="../../../../../../../usr/local/share/dotnet/sdk/6.0.402/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets" Line="267" Column="5" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="web-api" expanded="True" selected="True">
+          <Node name="web-api" expanded="True">
+            <Node name="NotenAppApiTest" expanded="True">
+              <Node name="SubjectServiceTests" expanded="True">
+                <Node name="GetAllSubjects.cs" selected="True" />
+              </Node>
+            </Node>
             <Node name="web-api" expanded="True" />
           </Node>
         </State>
@@ -12,9 +23,13 @@
       <Pad Id="MonoDevelop.Debugger.WatchPad">
         <State />
       </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="web-api" expanded="True" selected="True" />
+        </State>
+      </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.NotenAppApiTest FirstBuild="True" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MultiItemStartupConfigurations />
