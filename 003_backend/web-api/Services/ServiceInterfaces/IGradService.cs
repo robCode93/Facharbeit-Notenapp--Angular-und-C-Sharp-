@@ -9,8 +9,8 @@ namespace web_api.Services.ServiceInterfaces
         List<GradDetails> GetAllGrads();
         GradDetails GetGradById(Guid gradId);
 
-        ResponseModel CreateGrad(CreateGradModel createModel);
-        ResponseModel UpdateGrad(Guid gradId, UpdateGradModel updateModel);
+        ResponseModel CreateGrad(CreateAndUpdateGradModel createAndUpdateModel);
+        ResponseModel UpdateGrad(Guid gradId, CreateAndUpdateGradModel updateModel);
 
         ResponseModel DeleteGrad(Guid gradId);
     }

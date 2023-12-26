@@ -8,12 +8,10 @@ namespace web_api.Services.ServiceInterfaces
     {
         SubjectDetails GetSubjectById(Guid subjectId);
         List<SubjectDetails> GetAllSubjects();
-        List<GradDetails> GetGradsOfSubject(Guid subjectId);
+        List<SubjectDetails> GetAllActiveSubjects();
             
-        ResponseModel CreateSubject(CreateSubjectModel createModel);
-        ResponseModel UpdateSubject(Guid subjectId, UpdateSubjectModel updateModel);
-
-        ResponseModel AddGradToSubject(Guid subjectId, Guid gradId);
+        ResponseModel CreateSubject(CreateAndUpdateSubjectModel createAndUpdateModel);
+        ResponseModel UpdateSubject(Guid subjectId, CreateAndUpdateSubjectModel updateModel);
 
         ResponseModel DeleteSubject(Guid subjectId);
     }

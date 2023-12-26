@@ -12,13 +12,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// DbContext und ConectionString hinzufügen
+// DbContext und ConectionString hinzufï¿½gen
 builder.Services.AddDbContext<WebAppContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
 
 // Interfaces und Klassen verbinden
 builder.Services.AddScoped<IGradService, GradService>();
-builder.Services.AddScoped<IHolidayService, HolidayService>();
-builder.Services.AddScoped<ISchoolYearService, SchoolYearService>();
 builder.Services.AddScoped<ISchoolService, SchoolService>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 

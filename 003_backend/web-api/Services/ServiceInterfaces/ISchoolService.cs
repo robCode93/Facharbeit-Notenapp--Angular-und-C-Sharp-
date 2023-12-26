@@ -6,14 +6,13 @@ namespace web_api.Services.ServiceInterfaces
 {
     public interface ISchoolService
     {
-        List<SchoolDetails> GetAllSchools();
-        SchoolDetails GetSchoolById(Guid schoolId);
-        List<HolidayDetails> GetHolidaysOfSchool(Guid schoolId);
+        List<SchoolInformations> GetInformationsForAllSchools();
+        SchoolInformations GetSchoolInformations(Guid schoolId);
 
-        ResponseModel CreateSchool(CreateSchoolModel createModel);
-        ResponseModel UpdateSchool(Guid schoolId, UpdateSchoolModel updateModel);
+        ResponseModel AddNewSchoolInformations(CreateAndUpdateSchoolModel createAndUpdateModel);
+        ResponseModel UpdateSchoolInformations(Guid schoolId, CreateAndUpdateSchoolModel updateModel);
 
-        ResponseModel DeleteSchool(Guid schoolId);
+        ResponseModel DeleteSchoolInformations(Guid schoolId);
 
     }
 }

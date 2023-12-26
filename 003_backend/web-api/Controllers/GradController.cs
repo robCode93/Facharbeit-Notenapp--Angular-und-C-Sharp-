@@ -55,11 +55,11 @@ namespace web_api.Controllers
         // ########## POST-Methoden ##########
         [HttpPost]
         [Route("[action]")]
-        public IActionResult CreateGrad(CreateGradModel createModel)
+        public IActionResult CreateGrad(CreateAndUpdateGradModel createAndUpdateModel)
         {
             try
             {
-                var model = gradService.CreateGrad(createModel);
+                var model = gradService.CreateGrad(createAndUpdateModel);
                 return Ok(model);
             }
             catch (Exception)
@@ -72,7 +72,7 @@ namespace web_api.Controllers
         // ########## PATCH-Methoden ##########
         [HttpPatch]
         [Route("[action]/{id}")]
-        public IActionResult UpdateGrad([FromRoute] Guid id, UpdateGradModel updateModel)
+        public IActionResult UpdateGrad([FromRoute] Guid id, CreateAndUpdateGradModel updateModel)
         {
             try
             {

@@ -59,7 +59,7 @@ namespace NotenAppApiTest.SubjectServiceTests
             .With(sy => sy.School)
             .Create());
 
-            Fixture.Register(() => Fixture.Build<School>()
+            Fixture.Register(() => Fixture.Build<SchoolInformations>()
             .OmitAutoProperties()
             .With(s => s.Id)
             .With(s => s.Name)

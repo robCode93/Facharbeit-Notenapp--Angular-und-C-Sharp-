@@ -25,7 +25,4 @@
   <ItemGroup>
     <None Remove="CRUDModels\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CRUDModels\" />
-  </ItemGroup>
 </Project>

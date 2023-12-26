@@ -51,15 +51,15 @@ namespace web_api.Controllers
                 return BadRequest();
             }
         }
-
+        
         [HttpGet]
-        [Route("{id}/[action]")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GradDetails[]))]
-        public IActionResult GetGradsOfSubject([FromRoute] Guid id)
+        [Route("[action]")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(SubjectDetails[]))]
+        public IActionResult GetAllActiveSubjects()
         {
             try
             {
-                var model = _service.GetGradsOfSubject(id);
+                var model = _service.GetAllActiveSubjects();
                 return Ok(model);
             }
             catch (Exception)
@@ -71,11 +71,11 @@ namespace web_api.Controllers
         // ########## POST-Methoden ##########
         [HttpPost]
         [Route("[action]")]
-        public IActionResult CreateSubject(CreateSubjectModel createModel)
+        public IActionResult CreateSubject(CreateAndUpdateSubjectModel createAndUpdateModel)
         {
             try
             {
-                var model = _service.CreateSubject(createModel);
+                var model = _service.CreateSubject(createAndUpdateModel);
                 return Ok(model);
             }
             catch (Exception)
@@ -88,26 +88,11 @@ namespace web_api.Controllers
         // ########## PATCH-Methoden ##########
         [HttpPatch]
         [Route("[action]/{id}")]
-        public IActionResult UpdateSubject([FromRoute] Guid id, UpdateSubjectModel updateModel)
+        public IActionResult UpdateSubject([FromRoute] Guid id, CreateAndUpdateSubjectModel updateModel)
         {
             try
             {
                 var model = _service.UpdateSubject(id, updateModel);
-                return Ok(model);
-            }
-            catch (Exception)
-            {
-                return BadRequest();
-            }
-        }
-
-        [HttpPatch]
-        [Route("{subId}/[action]/{gradId}")]
-        public IActionResult AddGradToSubject([FromRoute] Guid subId, [FromRoute] Guid gradId)
-        {
-            try
-            {
-                var model = _service.AddGradToSubject(subId, gradId);
                 return Ok(model);
             }
             catch (Exception)

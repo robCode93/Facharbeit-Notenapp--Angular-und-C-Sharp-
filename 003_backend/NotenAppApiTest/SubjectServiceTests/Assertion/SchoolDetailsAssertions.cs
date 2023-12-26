@@ -16,11 +16,11 @@ namespace NotenAppApiTest.SubjectServiceTests.Assertion
 
         protected override string Identifier => "schooldetails";
 
-        public AndConstraint<SchoolDetails> Be(School school)
+        public AndConstraint<SchoolDetails> Be(SchoolInformations schoolInformations)
         {
-            Subject.Id.Should().Be(school!.Id);
-            Subject.Name.Should().Be(school!.Name);
-            Subject.FedState.Should().Be(school!.FedState);
+            Subject.Id.Should().Be(schoolInformations!.Id);
+            Subject.Name.Should().Be(schoolInformations!.Name);
+            Subject.FedState.Should().Be(schoolInformations!.FedState);
 
             return new AndConstraint<SchoolDetails>(Subject);
         }
