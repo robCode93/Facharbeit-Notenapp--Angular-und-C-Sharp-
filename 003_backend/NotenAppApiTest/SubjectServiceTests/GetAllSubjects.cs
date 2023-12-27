@@ -24,17 +24,17 @@ namespace NotenAppApiTest.SubjectServiceTests
             for(int i = 0; i < 3; i++)
             {
                 var subject = Fixture.Build<Subject>().Create();
-                WebAppContext.Subjects.Add(subject);
+                SchoolGradContext.Subjects.Add(subject);
             }
 
-            WebAppContext.SaveChanges();
+            SchoolGradContext.SaveChanges();
             // Act
             var allSubjects = Call();
 
             // Assert
             allSubjects.Should().NotBeNull();
             allSubjects.Should().HaveCount(3);
-            WebAppContext.Subjects.Should().HaveCount(3);
+            SchoolGradContext.Subjects.Should().HaveCount(3);
         }
 
         [Fact] 
@@ -48,7 +48,7 @@ namespace NotenAppApiTest.SubjectServiceTests
 
             // Assert
             result.Should().BeEmpty();
-            WebAppContext.Subjects.Should().HaveCount(0);
+            SchoolGradContext.Subjects.Should().HaveCount(0);
         }
 
 

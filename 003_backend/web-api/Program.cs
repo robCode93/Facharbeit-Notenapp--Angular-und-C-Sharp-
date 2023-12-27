@@ -1,6 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using web_api.Models;
 using web_api.Services;
+using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using web_api.Services.ServiceInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +13,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// DbContext und ConectionString hinzuf�gen
-builder.Services.AddDbContext<WebAppContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("ConStr")));
+// DbContext und ConectionString hinzufügen
+builder.Services.AddDbContext<SchoolGradContext>(x => x.UseNpgSql(builder.Configuration.GetConnectionString("ConStr")));
 
 // Interfaces und Klassen verbinden
 builder.Services.AddScoped<IGradService, GradService>();

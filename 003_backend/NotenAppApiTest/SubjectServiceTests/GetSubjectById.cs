@@ -9,7 +9,6 @@ using web_api.Models;
 using Xunit;
 using System.Diagnostics;
 using FluentAssertions;
-using NotenAppApiTest.SubjectServiceTests.Assertion;
 namespace NotenAppApiTest.SubjectServiceTests
 {
     public sealed class GetSubjectById : Infrastructure
@@ -31,8 +30,8 @@ namespace NotenAppApiTest.SubjectServiceTests
                 .With(s => s.Id, subjectId)
                 .Create();
 
-            WebAppContext.Subjects.Add(subject);
-            WebAppContext.SaveChanges();
+            SchoolGradContext.Subjects.Add(subject);
+            SchoolGradContext.SaveChanges();
 
             // Act
             var result = Call();
@@ -42,10 +41,10 @@ namespace NotenAppApiTest.SubjectServiceTests
 
             foreach(var grad in result.Grads)
             {
-                WebAppContext.Grads.Any(g => g.Id == grad.Id);
+                SchoolGradContext.Grads.Any(g => g.Id == grad.Id);
             }
 
-            WebAppContext.Subjects.Any(s => s.Id == subject.Id);
+            SchoolGradContext.Subjects.Any(s => s.Id == subject.Id);
             result.Should().Be(subject);
         }
 
@@ -60,7 +59,7 @@ namespace NotenAppApiTest.SubjectServiceTests
 
             // Assert
             result.Should().BeNull();
-            WebAppContext.Subjects.Should().HaveCount(0);
+            SchoolGradContext.Subjects.Should().HaveCount(0);
         }
 
         [Fact]
@@ -74,8 +73,8 @@ namespace NotenAppApiTest.SubjectServiceTests
                 .Without(s => s.Grads)
                 .Create();
 
-            WebAppContext.Subjects.Add(subject);
-            WebAppContext.SaveChanges();
+            SchoolGradContext.Subjects.Add(subject);
+            SchoolGradContext.SaveChanges();
 
             // Act
             var result = Call();
@@ -84,9 +83,9 @@ namespace NotenAppApiTest.SubjectServiceTests
             result.Should().NotBeNull();
             result.Id.Should().Be(subject.Id);
             result.Grads.Should().BeNull();
-            WebAppContext.Subjects.Should().HaveCount(1);
-            WebAppContext.Subjects.First(s => s.Id == result.Id);
-            WebAppContext.Subjects.First(s => s.Id == subject.Id);
+            SchoolGradContext.Subjects.Should().HaveCount(1);
+            SchoolGradContext.Subjects.First(s => s.Id == result.Id);
+            SchoolGradContext.Subjects.First(s => s.Id == subject.Id);
         }
 
 

@@ -16,7 +16,7 @@ namespace NotenAppApiTest.SubjectServiceTests
     {
 
         protected readonly IFixture Fixture;
-        protected readonly WebAppContext WebAppContext;
+        protected readonly SchoolGradContext SchoolGradContext;
         protected readonly SubjectService SubjectService;
 
         protected Infrastructure()
@@ -24,11 +24,13 @@ namespace NotenAppApiTest.SubjectServiceTests
             Fixture = new Fixture().Customize(new AutoMoqCustomization());
             Fixture.Behaviors.Add(new OmitOnRecursionBehavior());
 
-            WebAppContext = new WebAppContext(new DbContextOptionsBuilder<WebAppContext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options);
+            SchoolGradContext = new SchoolGradContext(new DbContextOptionsBuilder<SchoolGradContext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options);
 
-            Fixture.Inject(WebAppContext);
+            Fixture.Inject(SchoolGradContext);
 
-            WebAppContext = Fixture.Create<WebAppContext>();
+            SubjectService = Fixture.Create<SubjectService>();
+            
+            SchoolGradContext = Fixture.Create<SchoolGradContext>();
         }
 
 
@@ -47,35 +49,16 @@ namespace NotenAppApiTest.SubjectServiceTests
             .With(g => g.Id)
             .With(g => g.Name)
             .With(g => g.Subject)
-            .With(g => g.Points)
+            .With(g => g.GradValueDecimal)
+            .With(g => g.GradValuePoints)
             .With(g => g.Date)
-            .Create());
-
-            Fixture.Register(() => Fixture.Build<SchoolYear>()
-            .OmitAutoProperties()
-            .With(sy => sy.Id)
-            .With(sy => sy.Name)
-            .With(sy => sy.Subjects)
-            .With(sy => sy.School)
             .Create());
 
             Fixture.Register(() => Fixture.Build<SchoolInformations>()
             .OmitAutoProperties()
             .With(s => s.Id)
             .With(s => s.Name)
-            .With(s => s.FedState)
-            .With(s => s.Holidays)
             .Create());
-
-            Fixture.Register(() => Fixture.Build<Holiday>()
-            .OmitAutoProperties()
-            .With(h => h.Id)
-            .With(h => h.Name)
-            .With(h => h.StartDate)
-            .With(h => h.EndDate)
-            .Create());
-
         }
-    
     }
 }

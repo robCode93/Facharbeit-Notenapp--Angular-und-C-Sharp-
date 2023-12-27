@@ -2,9 +2,9 @@
 
 namespace web_api.Models
 {
-    public class WebAppContext : DbContext
+    public class SchoolGradContext : DbContext
     {
-        public WebAppContext(DbContextOptions options) : base(options) { }
+        public SchoolGradContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Calendar> Calendars { get; set; }
         public DbSet<CalendarEvent> CalendarEvents { get; set; }
